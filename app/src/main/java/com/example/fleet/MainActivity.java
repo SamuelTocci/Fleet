@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        mSwitch_min = findViewById(R.id.switch_min);
         mSwitch_max = findViewById(R.id.switch_max);
         mGroups = findViewById(R.id.go_groups);
         tv_group = findViewById(R.id.tv_group);
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         // shrinked state initially
         mSwitch_max.shrink();
 
-        mSwitch_min.setOnClickListener(
+        mSwitch_max.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -121,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             // true make all the action name
                             // texts and FABs GONE.
                             mGroups.hide();
+                            tv_group.setVisibility(View.GONE);
 
 
                             // Set the FAB to shrink after user

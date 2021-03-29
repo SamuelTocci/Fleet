@@ -76,32 +76,19 @@
     <!--Make sure that you are constraining this Text
          to the add Person FAB button-->
 
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/switch_max"
-            android:layout_width="124dp"
-            android:layout_height="50dp"
+            android:layout_width="130dp"
+            android:layout_height="57dp"
             android:layout_gravity="end"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="28dp"
             android:backgroundTint="@color/colorAccentYellow"
-            android:text="Switch"
+            android:text="Select"
             app:icon="@drawable/ic_baseline_swap_horizontal_circle_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/switch_min"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccentYellow"
-            app:fabSize="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_baseline_swap_horizontal_circle_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.988"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.979" />
 
     <TextView
             android:id="@+id/tv_group"
@@ -120,9 +107,10 @@
             android:backgroundTint="@color/colorAccentBlue"
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_baseline_swap_horizontal_circle_24"
-            app:layout_constraintBottom_toTopOf="@+id/switch_min"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/switch_min" />
+            app:layout_constraintBottom_toTopOf="@+id/switch_max"
+            app:layout_constraintEnd_toEndOf="@+id/switch_max"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="20dp" />
 
     <!--Action name text for the add person button-->
     <!--Make sure that you are constraining this Text

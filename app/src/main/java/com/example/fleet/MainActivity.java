@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mGroups = findViewById(R.id.go_groups);
         tv_group = findViewById(R.id.tv_group);
 
+        mGroups.setVisibility(View.GONE);
         tv_group.setVisibility(View.GONE);
         isAllFabsVisible = false;
 

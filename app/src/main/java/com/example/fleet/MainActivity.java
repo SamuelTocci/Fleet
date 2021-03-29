@@ -38,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
     // Use the FloatingActionButton for all the add person
     // and add alarm
-    FloatingActionButton mAddAlarmFab, mAddPersonFab;
+    FloatingActionButton mSwitch_min, mGroups;
 
     // Use the ExtendedFloatingActionButton to handle the
     // parent FAB
-    ExtendedFloatingActionButton mAddFab;
+    ExtendedFloatingActionButton mSwitch_max;
 
     // These TextViews are taken to make visible and
     // invisible along with FABs except parent FAB's action
     // name
-    TextView addAlarmActionText, addPersonActionText;
+    TextView tv_group;
 
     // to check whether sub FABs are visible or not
     Boolean isAllFabsVisible;
@@ -81,39 +81,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Register all the FABs with their appropriate IDs
-        // This FAB button is the Parent
-        mAddFab = findViewById(R.id.add_fab);
-        // FAB button
-        mAddAlarmFab = findViewById(R.id.add_alarm_fab);
-        mAddPersonFab = findViewById(R.id.add_person_fab);
 
-        // Also register the action name text, of all the
-        // FABs. except parent FAB action name text
-        addAlarmActionText = findViewById(R.id.add_alarm_action_text);
-        addPersonActionText = findViewById(R.id.add_person_action_text);
+        mSwitch_min = findViewById(R.id.switch_min);
+        mSwitch_max = findViewById(R.id.switch_max);
+        mGroups = findViewById(R.id.go_groups);
+        tv_group = findViewById(R.id.tv_group);
 
-        // Now set all the FABs and all the action name
-        // texts as GONE
-        mAddAlarmFab.setVisibility(View.GONE);
-        mAddPersonFab.setVisibility(View.GONE);
-        addAlarmActionText.setVisibility(View.GONE);
-        addPersonActionText.setVisibility(View.GONE);
-
-        // make the boolean variable as false, as all the
-        // action name texts and all the sub FABs are
-        // invisible
+        tv_group.setVisibility(View.GONE);
         isAllFabsVisible = false;
 
         // Set the Extended floating action button to
         // shrinked state initially
-        mAddFab.shrink();
+        mSwitch_max.shrink();
 
-        // We will make all the FABs and action name texts
-        // visible only when Parent FAB button is clicked So
-        // we have to handle the Parent FAB button first, by
-        // using setOnClickListener you can see below
-        mAddFab.setOnClickListener(
+        mSwitch_min.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -122,15 +103,13 @@ public class MainActivity extends AppCompatActivity {
                             // when isAllFabsVisible becomes
                             // true make all the action name
                             // texts and FABs VISIBLE.
-                            mAddAlarmFab.show();
-                            mAddPersonFab.show();
-                            addAlarmActionText.setVisibility(View.VISIBLE);
-                            addPersonActionText.setVisibility(View.VISIBLE);
+                            mGroups.show();
+                            tv_group.setVisibility(View.VISIBLE);
 
                             // Now extend the parent FAB, as
                             // user clicks on the shrinked
                             // parent FAB
-                            mAddFab.extend();
+                            mSwitch_max.extend();
 
                             // make the boolean variable true as
                             // we have set the sub FABs
@@ -141,14 +120,12 @@ public class MainActivity extends AppCompatActivity {
                             // when isAllFabsVisible becomes
                             // true make all the action name
                             // texts and FABs GONE.
-                            mAddAlarmFab.hide();
-                            mAddPersonFab.hide();
-                            addAlarmActionText.setVisibility(View.GONE);
-                            addPersonActionText.setVisibility(View.GONE);
+                            mGroups.hide();
+
 
                             // Set the FAB to shrink after user
                             // closes all the sub FABs
-                            mAddFab.shrink();
+                            mSwitch_max.shrink();
 
                             // make the boolean variable false
                             // as we have set the sub FABs
@@ -162,25 +139,14 @@ public class MainActivity extends AppCompatActivity {
         // FAB. Here it shows simple Toast msg. The Toast
         // will be shown only when they are visible and only
         // when user clicks on them
-        mAddPersonFab.setOnClickListener(
+        mGroups.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Person Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Switched to group view", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // below is the sample action to handle add alarm
-        // FAB. Here it shows simple Toast msg The Toast
-        // will be shown only when they are visible and only
-        // when user clicks on them
-        mAddAlarmFab.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Alarm Added", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override

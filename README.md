@@ -1,4 +1,7 @@
 # Fleet
+
+An app to meet people
+
 Folder Structure Conventions
 ============================
 

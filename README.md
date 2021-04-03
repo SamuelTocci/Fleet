@@ -2,7 +2,7 @@
 
 An app to meet people
 
-![alt text](https://github.com/SamuelTocci/Fleet/blob/master/mockups.jpg?raw=true)
+![alt text](https://github.com/SamuelTocci/Fleet/blob/master/mockup.jpg?raw=true)
 
 Folder Structure Conventions
 ============================

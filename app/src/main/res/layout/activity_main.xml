@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:id="@+id/Layout1">
+        android:id="@+id/Layout1"
+        android:background="@drawable/gradient">
 
 
     <com.facebook.login.widget.LoginButton
@@ -20,100 +21,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.692" />
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:srcCompat="@tools:sample/avatars"
-            android:id="@+id/iv_profilepic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/login_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.81"
-            android:contentDescription="@string/profile_picture" />
-
     <TextView
             android:layout_width="66dp"
             android:layout_height="22dp"
             android:id="@+id/tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profilepic"
             app:layout_constraintBottom_toTopOf="@+id/login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.46" />
-    <!--This will be the parent Floating Action Button-->
-    <!--After the implementation the Floating Action Button at
-         the bottom right corner as we have constrained accordingly-->
-    <!--After clicking the above button the
-        following two buttons will pop up.
-         So this button is considered as parent FAB-->
-    <!--After opening the application it looks like regular
-        FAB but after user clicks it, it extends-->
-    <!--This functionality has been handled in the MainActivity.java-->
-    <!--Floating action button for add alarm-->
-    <!--Make sure that you are constraining this
-        button to the parent button-->
-    <!--Make sure to add backgroundTint attribute to match
-         the entire application color-->
-    <!--because after changing the base application theme the color
-         of the FAB is set Blue as default-->
-
-    <!--Action name text for the add alarm button-->
-    <!--Make sure that you are constraining this
-        Text to the add Alarm FAB button-->
-
-    <!--Floating action button for add person-->
-    <!--Make sure that you are constraining this button
-        to the add Alarm FAB button-->
-    <!--Make sure to add backgroundTint attribute to match
-         the entire application color-->
-    <!--because after changing the base application theme
-         the color of the FAB is set Blue as default-->
-
-    <!--Action name text for the add person button-->
-    <!--Make sure that you are constraining this Text
-         to the add Person FAB button-->
-
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/switch_max"
-            android:layout_width="130dp"
-            android:layout_height="57dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="28dp"
-            android:backgroundTint="@color/colorAccentYellow"
-            android:text="Select"
-            app:icon="@drawable/ic_baseline_swap_horizontal_circle_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-            android:id="@+id/tv_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Groups"
-            app:layout_constraintBottom_toBottomOf="@+id/go_groups"
-            app:layout_constraintEnd_toStartOf="@+id/go_groups"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="20dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/go_groups"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccentBlue"
-            app:fabSize="normal"
-            app:srcCompat="@drawable/ic_baseline_swap_horizontal_circle_24"
-            app:layout_constraintBottom_toTopOf="@+id/switch_max"
-            app:layout_constraintEnd_toEndOf="@+id/switch_max"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="20dp" />
-
-    <!--Action name text for the add person button-->
-    <!--Make sure that you are constraining this Text
-         to the add Person FAB button-->
+            app:layout_constraintHorizontal_bias="0.498" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

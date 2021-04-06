@@ -9,11 +9,10 @@
         android:id="@+id/Layout1"
         android:background="@drawable/gradient">
 
-
     <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
-            android:layout_width="221dp"
-            android:layout_height="30dp"
+            android:layout_width="282dp"
+            android:layout_height="28dp"
             android:layout_gravity="center_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

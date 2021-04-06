@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#160C28</color>
-    <color name="colorAccentYellow">#EFCB68</color>
+    <color name="colorAccentYellow">#5AEFCB68</color>
+    <color name="colorAccentLight"> #E2DFE2</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.fleet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
@@ -36,10 +38,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(data1[position]);
         holder.groupName.setText(data2[position]);
         holder.picture.setImageResource(images[position]);
+
+        holder.recycler_row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,mapActivity.class);
+                intent.putExtra("data1",data1[position]);
+                intent.putExtra("data2",data2[position]);
+                intent.putExtra("images",images[position]);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
+        if(data1 == null){return 0;}
         return data1.length;
     }
 
@@ -47,12 +61,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView description,groupName;
         ImageView picture;
+        ConstraintLayout recycler_row;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             description = itemView.findViewById(R.id.group_description);
             groupName = itemView.findViewById(R.id.group_name);
             picture = itemView.findViewById(R.id.picture);
+            recycler_row = itemView.findViewById(R.id.recycler_row);
         }
     }
 }

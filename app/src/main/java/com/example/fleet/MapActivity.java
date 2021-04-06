@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class mapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity {
 
     String data1, data2;
     int image;

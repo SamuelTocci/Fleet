@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.recycler_row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,mapActivity.class);
+                Intent intent = new Intent(context, MapActivity.class);
                 intent.putExtra("data1",data1[position]);
                 intent.putExtra("data2",data2[position]);
                 intent.putExtra("images",images[position]);
@@ -67,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             description = itemView.findViewById(R.id.group_description);
             groupName = itemView.findViewById(R.id.group_name);
-            picture = itemView.findViewById(R.id.picture);
+            picture = itemView.findViewById(R.id.person_1);
             recycler_row = itemView.findViewById(R.id.recycler_row);
         }
     }

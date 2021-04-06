@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.nio.channels.ClosedByInterruptException;
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public class GroupActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<Integer> GroupIdList = new ArrayList();
 
-    String s1[], s2[];
-    int images[];
+    private String s1[], s2[];
+    private int images[];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

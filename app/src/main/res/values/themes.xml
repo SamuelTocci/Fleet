@@ -3,7 +3,7 @@
     <style name="Theme.Fleet" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorAccentYellow</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/colorAccentYellow</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

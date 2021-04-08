@@ -20,13 +20,4 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.692" />
 
-    <TextView
-            android:layout_width="66dp"
-            android:layout_height="22dp"
-            android:id="@+id/tv_name"
-            app:layout_constraintBottom_toTopOf="@+id/login_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

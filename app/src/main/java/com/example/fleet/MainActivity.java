@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
-    private ImageView iv_profilePic;
-    private TextView tv_name;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(AccessToken.getCurrentAccessToken() != null){
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
+            intent.putExtra("userId", id);
             startActivity(intent);
         }
 
         loginButton = findViewById(R.id.login_button);
-        tv_name = findViewById(R.id.tv_name);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -86,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCompleted(JSONObject object, GraphResponse response) {
                 Log.d("demo", object.toString());
                 try {
-                    String name = object.getString("name");
-                    String id = object.getString("id");
-                    tv_name.setText(name);
+                    id = object.getString("id");
 //                    Picasso.get().load("https://graph.facebook.com/"+ id + "/picture?type=large")
 //                            .into(iv_profilePic);
                 } catch (JSONException e) {
@@ -108,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
             if(currentAccessToken == null){
                 LoginManager.getInstance().logOut();
-                tv_name.setText("");
-                iv_profilePic.setImageResource(0);
             }
         }
     };

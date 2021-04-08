@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
-    String data1[], data2[];
-    int images[];
+    String[] data1;
+    String[] data2;
+    int[] images;
     Context context;
 
-    public RecyclerViewAdapter(Context ct, String s1[],String s2[], int img[]){
+    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img){
         context = ct;
         data1 = s1;
         data2 = s2;

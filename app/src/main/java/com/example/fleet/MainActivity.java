@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("demo", object.toString());
                 try {
                     id = object.getString("id");
-//                    Picasso.get().load("https://graph.facebook.com/"+ id + "/picture?type=large")
-//                            .into(iv_profilePic);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

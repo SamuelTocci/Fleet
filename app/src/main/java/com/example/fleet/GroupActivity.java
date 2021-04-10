@@ -27,8 +27,8 @@ public class GroupActivity extends AppCompatActivity {
     private int[] images = {R.drawable.testperson1};
     private Map<Integer, ArrayList<User>> userMap = new HashMap<>();
 
-    private ImageView userPicture = findViewById(R.id.user_picture);
-    private final String userId = getIntent().getStringExtra("id");
+    private ImageView userPicture;
+    private String userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +36,8 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.group_view);
 
         recyclerView = findViewById(R.id.recycler_view);
+        userPicture = findViewById(R.id.user_picture);
+        userId = getIntent().getStringExtra("id");
         Picasso.get().load("https://graph.facebook.com/"+ userId + "/picture?type=large")
                     .into(userPicture);
 

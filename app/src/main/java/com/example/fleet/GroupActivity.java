@@ -50,6 +50,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     Log.d("demo ", "add button pressed");
+                    //bottom sheet card toevoegen
             }
         });
 

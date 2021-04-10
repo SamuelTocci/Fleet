@@ -44,9 +44,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MapActivity.class);
-                intent.putExtra("data1",data1[position]);
-                intent.putExtra("data2",data2[position]);
-                intent.putExtra("images",images[position]);
                 context.startActivity(intent);
             }
         });

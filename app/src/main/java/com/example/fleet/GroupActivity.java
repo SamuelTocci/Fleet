@@ -33,6 +33,7 @@ public class GroupActivity extends AppCompatActivity {
     private ImageView userPicture;
     private String userId;
     private ImageView add_btn;
+    private ImageView add_btn_card;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +47,18 @@ public class GroupActivity extends AppCompatActivity {
                     .into(userPicture);
 
         add_btn = findViewById(R.id.add_btn);
+
+        add_btn_card = findViewById(R.id.addbtn_card);
+
+
+        add_btn_card.setVisibility(View.GONE);
+
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     Log.d("demo ", "add button pressed");
-                    //bottom sheet card toevoegen
+                    add_btn.setVisibility(View.GONE);
+                    add_btn_card.setVisibility(View.VISIBLE);
             }
         });
 

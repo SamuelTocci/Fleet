@@ -32,12 +32,7 @@ public class GroupActivity extends AppCompatActivity {
     private int[] images = {R.drawable.testperson1};
     private Map<Integer, ArrayList<User>> userMap = new HashMap<>();
 
-    private ImageView userPicture;
-    private String userId;
     private ImageView add_btn;
-    private ImageView add_btn_card;
-    private ImageView cancel_button, qr_button,single_button,group_button;
-    private ImageView plus1,plus2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,22 +40,22 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.group_view);
 
         recyclerView = findViewById(R.id.recycler_view);
-        userPicture = findViewById(R.id.user_picture);
-        userId = getIntent().getStringExtra("id");
+        ImageView userPicture = findViewById(R.id.user_picture);
+        String userId = getIntent().getStringExtra("userId");
         Picasso.get().load("https://graph.facebook.com/"+ userId + "/picture?type=large")
                     .into(userPicture);
 
         add_btn = findViewById(R.id.add_btn);
 
-        add_btn_card = findViewById(R.id.addbtn_card);
-        cancel_button = findViewById(R.id.cancel_button);
-        qr_button = findViewById(R.id.qr_button);
-        single_button = findViewById(R.id.single_button);
-        group_button = findViewById(R.id.group_button);
-        plus1 = findViewById(R.id.plus1);
-        plus2 = findViewById(R.id.plus2);
+        ImageView add_btn_card = findViewById(R.id.addbtn_card);
+        ImageView cancel_button = findViewById(R.id.cancel_button);
+        ImageView qr_button = findViewById(R.id.qr_button);
+        ImageView single_button = findViewById(R.id.single_button);
+        ImageView group_button = findViewById(R.id.group_button);
+        ImageView plus1 = findViewById(R.id.plus1);
+        ImageView plus2 = findViewById(R.id.plus2);
 
-        ImageView[] addCard = {cancel_button,qr_button,single_button,group_button,plus1,plus2,add_btn_card};
+        ImageView[] addCard = {cancel_button, qr_button, single_button, group_button, plus1, plus2, add_btn_card};
 
         Arrays.stream(addCard)
                 .forEach(e -> e.setVisibility(View.GONE));

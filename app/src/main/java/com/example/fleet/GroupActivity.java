@@ -16,8 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.lang.reflect.Array;
 import java.nio.channels.ClosedByInterruptException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @SuppressWarnings("unchecked")
 public class GroupActivity extends AppCompatActivity {
@@ -34,6 +36,8 @@ public class GroupActivity extends AppCompatActivity {
     private String userId;
     private ImageView add_btn;
     private ImageView add_btn_card;
+    private ImageView cancel_button, qr_button,single_button,group_button;
+    private ImageView plus1,plus2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,16 +53,60 @@ public class GroupActivity extends AppCompatActivity {
         add_btn = findViewById(R.id.add_btn);
 
         add_btn_card = findViewById(R.id.addbtn_card);
+        cancel_button = findViewById(R.id.cancel_button);
+        qr_button = findViewById(R.id.qr_button);
+        single_button = findViewById(R.id.single_button);
+        group_button = findViewById(R.id.group_button);
+        plus1 = findViewById(R.id.plus1);
+        plus2 = findViewById(R.id.plus2);
 
+        ImageView[] addCard = {cancel_button,qr_button,single_button,group_button,plus1,plus2,add_btn_card};
 
-        add_btn_card.setVisibility(View.GONE);
+        Arrays.stream(addCard)
+                .forEach(e -> e.setVisibility(View.GONE));
+
+//        add_btn_card.setVisibility(View.GONE);
+//        cancel_button.setVisibility(View.GONE);
+//        qr_button.setVisibility(View.GONE);
+//        single_button.setVisibility(View.GONE);
+//        group_button.setVisibility(View.GONE);
+//        plus1.setVisibility(View.GONE);
+//        plus2.setVisibility(View.GONE);
 
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     Log.d("demo ", "add button pressed");
                     add_btn.setVisibility(View.GONE);
-                    add_btn_card.setVisibility(View.VISIBLE);
+                    Arrays.stream(addCard)
+                            .forEach(e -> e.setVisibility(View.VISIBLE));
+            }
+        });
+
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Arrays.stream(addCard)
+                        .forEach(e -> e.setVisibility(View.GONE));
+                add_btn.setVisibility(View.VISIBLE);
+            }
+        });
+        qr_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //intent naar qr scanner
+            }
+        });
+        single_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //intent naar temp event creation
+            }
+        });
+        group_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //intent naar group creation view
             }
         });
 

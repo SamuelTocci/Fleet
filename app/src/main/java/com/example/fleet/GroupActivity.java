@@ -77,12 +77,14 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     Log.d("demo ", "add button pressed");
-                    add_btn.setVisibility(View.GONE);
                     Arrays.stream(addCard)
                             .forEach(e -> e.setVisibility(View.VISIBLE));
                     animSlideUp.reset();
                     Arrays.stream(addCard).forEach(e -> e.clearAnimation());
                     Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideUp));
+                    add_btn.clearAnimation();
+                    add_btn.startAnimation(animSlideDown);
+                    add_btn.setVisibility(View.GONE);
             }
         });
 
@@ -95,6 +97,9 @@ public class GroupActivity extends AppCompatActivity {
                 animSlideUp.reset();
                 Arrays.stream(addCard).forEach(e -> e.clearAnimation());
                 Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideDown));
+                add_btn.clearAnimation();
+                add_btn.startAnimation(animSlideUp);
+
             }
         });
         qr_button.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.example.fleet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.nio.channels.ClosedByInterruptException;
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -105,7 +107,9 @@ public class GroupActivity extends AppCompatActivity {
         qr_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //intent naar qr scanner
+                Intent intent = new Intent(GroupActivity.this, QRactivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
             }
         });
         single_button.setOnClickListener(new View.OnClickListener() {

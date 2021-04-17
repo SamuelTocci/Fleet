@@ -1,5 +1,6 @@
 package com.example.fleet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static java.security.AccessController.getContext;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
     String[] data1;
     String[] data2;
     int[] images;
     Context context;
+    Activity activity;
 
     public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img){
         context = ct;
@@ -43,8 +47,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.recycler_row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Activity activity = (Activity) context;
                 Intent intent = new Intent(context, MapActivity.class);
                 context.startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
             }
         });
     }

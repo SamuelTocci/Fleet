@@ -3,6 +3,8 @@ package com.example.fleet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -60,6 +62,9 @@ public class GroupActivity extends AppCompatActivity {
         Arrays.stream(addCard)
                 .forEach(e -> e.setVisibility(View.GONE));
 
+        Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
 //        add_btn_card.setVisibility(View.GONE);
 //        cancel_button.setVisibility(View.GONE);
 //        qr_button.setVisibility(View.GONE);
@@ -75,6 +80,9 @@ public class GroupActivity extends AppCompatActivity {
                     add_btn.setVisibility(View.GONE);
                     Arrays.stream(addCard)
                             .forEach(e -> e.setVisibility(View.VISIBLE));
+                    animSlideUp.reset();
+                    Arrays.stream(addCard).forEach(e -> e.clearAnimation());
+                    Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideUp));
             }
         });
 
@@ -84,6 +92,9 @@ public class GroupActivity extends AppCompatActivity {
                 Arrays.stream(addCard)
                         .forEach(e -> e.setVisibility(View.GONE));
                 add_btn.setVisibility(View.VISIBLE);
+                animSlideUp.reset();
+                Arrays.stream(addCard).forEach(e -> e.clearAnimation());
+                Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideDown));
             }
         });
         qr_button.setOnClickListener(new View.OnClickListener() {

@@ -10,12 +10,50 @@
             android:layout_width="84dp"
             android:layout_height="84dp"
             app:srcCompat="@drawable/ic_scanner"
-            android:id="@+id/imageView5"
+            android:id="@+id/qr_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="135dp" />
+
+    <ImageView
+            android:layout_width="314dp"
+            android:layout_height="53dp"
+            app:srcCompat="@drawable/ic_scancode"
+            android:id="@+id/qr_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qr_logo"
+            android:layout_marginTop="32dp"
+            app:layout_constraintHorizontal_bias="0.492" />
+
+    <ImageView
+            android:layout_width="314dp"
+            android:layout_height="53dp"
+            app:srcCompat="@drawable/ic_typecode"
+            android:id="@+id/manual_input"
+            app:layout_constraintTop_toBottomOf="@+id/qr_start"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/qr_start"
+            app:layout_constraintEnd_toEndOf="@+id/qr_start" />
+
+    <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/scanner_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoFocusButtonColor="@android:color/white"
+            app:autoFocusButtonVisible="false"
+            app:flashButtonColor="@android:color/white"
+            app:flashButtonVisible="false"
+            app:frameColor="@color/colorAccentYellow"
+            app:frameCornersSize="50dp"
+            app:frameCornersRadius="24dp"
+            app:frameAspectRatioWidth="1"
+            app:frameAspectRatioHeight="1"
+            app:frameSize="0.6"
+            app:frameThickness="3dp"
+            app:maskColor="@color/colorPrimary"/>
 
     <ImageView
             android:layout_width="wrap_content"
@@ -26,25 +64,4 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="32dp" />
-
-    <ImageView
-            android:layout_width="314dp"
-            android:layout_height="53dp"
-            app:srcCompat="@drawable/ic_scancode"
-            android:id="@+id/imageView7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            android:layout_marginTop="32dp"
-            app:layout_constraintHorizontal_bias="0.492" />
-
-    <ImageView
-            android:layout_width="314dp"
-            android:layout_height="53dp"
-            app:srcCompat="@drawable/ic_typecode"
-            android:id="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/imageView7"
-            app:layout_constraintEnd_toEndOf="@+id/imageView7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

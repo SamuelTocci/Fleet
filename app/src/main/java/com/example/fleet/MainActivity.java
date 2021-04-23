@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private String id;
+    private ImageView logo_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         loginButton = findViewById(R.id.login_button);
+        logo_btn = findViewById(R.id.logo_btn);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -71,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.d("demo ", "login error");
+            }
+        });
+
+        logo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AccessToken.getCurrentAccessToken() != null){
+                    Intent intent = new Intent(MainActivity.this, GroupActivity.class);
+                    intent.putExtra("userId", id);
+                    startActivity(intent);
+                }
             }
         });
     }

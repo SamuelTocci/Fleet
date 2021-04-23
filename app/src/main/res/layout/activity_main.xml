@@ -20,4 +20,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.692" />
 
+    <ImageView
+            android:layout_width="97dp"
+            android:layout_height="93dp"
+            app:srcCompat="@drawable/ic_group"
+            android:id="@+id/logo_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/login_button"
+            app:layout_constraintVertical_bias="0.643" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

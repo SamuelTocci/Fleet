@@ -81,7 +81,7 @@ or, less commonly, into the `doc` folder.
 ...
 
 ### 3rd party libraries
-
+https://github.com/yuriy-budiyev/code-scanner
 ...
 
 ### License information

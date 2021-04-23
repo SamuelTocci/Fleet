@@ -37,6 +37,7 @@ public class GroupActivity extends AppCompatActivity {
     private Map<Integer, ArrayList<User>> userMap = new HashMap<>();
 
     private ImageView add_btn;
+    private ImageView settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class GroupActivity extends AppCompatActivity {
                     .into(userPicture);
 
         add_btn = findViewById(R.id.add_btn);
+        settings = findViewById(R.id.settings);
 
         ImageView add_btn_card = findViewById(R.id.addbtn_card);
         ImageView cancel_button = findViewById(R.id.cancel_button);
@@ -67,14 +69,6 @@ public class GroupActivity extends AppCompatActivity {
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
-//        add_btn_card.setVisibility(View.GONE);
-//        cancel_button.setVisibility(View.GONE);
-//        qr_button.setVisibility(View.GONE);
-//        single_button.setVisibility(View.GONE);
-//        group_button.setVisibility(View.GONE);
-//        plus1.setVisibility(View.GONE);
-//        plus2.setVisibility(View.GONE);
-
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +81,14 @@ public class GroupActivity extends AppCompatActivity {
                     add_btn.clearAnimation();
                     add_btn.startAnimation(animSlideDown);
                     add_btn.setVisibility(View.GONE);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
             }
         });
 

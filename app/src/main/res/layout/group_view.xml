@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_settings"
-            android:id="@+id/imageView3"
+            android:id="@+id/settings"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"

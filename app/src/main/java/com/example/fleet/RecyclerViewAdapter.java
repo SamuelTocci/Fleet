@@ -23,7 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     Activity activity;
 
-    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img){
+    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img){ //[[1,2,3],[5,1,8]]
         context = ct;
         data1 = s1;
         data2 = s2;

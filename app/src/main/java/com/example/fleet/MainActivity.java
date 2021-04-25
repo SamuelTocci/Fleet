@@ -33,8 +33,16 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private String id;
     private ImageView logo_btn;
+    private String firstName, lastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(AccessToken.getCurrentAccessToken() != null){
+            if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
+                httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
+            }
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
             intent.putExtra("userId", id);
             startActivity(intent);
@@ -80,12 +92,44 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(AccessToken.getCurrentAccessToken() != null){
+                    if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
+                        httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
+                    }
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
                     intent.putExtra("userId", id);
                     startActivity(intent);
                 }
             }
         });
+    }
+
+    public ArrayList<String> httpRequest(String url) {
+        ArrayList<String> output = new ArrayList<>();
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                BufferedReader in = null;
+                try {
+                    URL myURL = new URL(url);
+                    URLConnection myURLConnection = myURL.openConnection();
+                    myURLConnection.connect();
+
+                    in = new BufferedReader(new InputStreamReader(
+                            myURLConnection.getInputStream()));
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        output.add(inputLine);
+                    }
+                    in.close();
+                } catch (MalformedURLException e) {
+                    // new URL() failed
+                    // ...
+                } catch (IOException e) {
+                    Log.d("demo", e.toString());
+                }
+            }
+        }).start();
+        return output;
     }
 
     @Override
@@ -99,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("demo", object.toString());
                 try {
                     id = object.getString("id");
+                    firstName = object.getString("first_name");
+                    lastName = object.getString("last_name");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

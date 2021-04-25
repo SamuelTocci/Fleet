@@ -59,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(AccessToken.getCurrentAccessToken() != null && id != null){
-            if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
-                httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
-            }
+            createUserSQL();
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
             intent.putExtra("userId", id);
             startActivity(intent);
@@ -91,25 +89,10 @@ public class MainActivity extends AppCompatActivity {
         logo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.d("demo", object.toString());
-                        try {
-                            id = object.getString("id");
-                            firstName = object.getString("first_name");
-                            lastName = object.getString("last_name");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
+                graphRequest();
 
                 if(AccessToken.getCurrentAccessToken() != null && id != null){
-                    if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
-                        httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
-                    }
+                    createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
                     intent.putExtra("userId", id);
                     startActivity(intent);
@@ -166,6 +149,12 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("fields", "name, id, first_name, last_name");
         graphRequest.setParameters(bundle);
         graphRequest.executeAsync();
+    }
+
+    public void createUserSQL(){
+        if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
+            httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
+        }
     }
 
     @Override

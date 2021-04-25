@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graphRequest();
-
                 if(AccessToken.getCurrentAccessToken() != null && id != null){
                     createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
@@ -120,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     in.close();
                 } catch (MalformedURLException e) {
-                    // new URL() failed
-                    // ...
+                    Log.d("demo", e.toString());
                 } catch (IOException e) {
                     Log.d("demo", e.toString());
                 }
@@ -130,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
+    //TODO id is altijd null momenteel
     public void graphRequest(){
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -161,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-
         graphRequest();
     }
 

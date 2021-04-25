@@ -31,6 +31,7 @@ public class GroupActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Integer> GroupIdList = new ArrayList();
 
+    //TODO data van sql in datastructuur zetten
     private String[] s1 = {"test category"};
     private String[] s2 = {"group name"};
     private int[] images = {R.drawable.testperson1};
@@ -53,6 +54,7 @@ public class GroupActivity extends AppCompatActivity {
         add_btn = findViewById(R.id.add_btn);
         settings = findViewById(R.id.settings);
 
+        // dit kan mss makkelijker geschreven worden
         ImageView add_btn_card = findViewById(R.id.addbtn_card);
         ImageView cancel_button = findViewById(R.id.cancel_button);
         ImageView qr_button = findViewById(R.id.qr_button);
@@ -117,13 +119,13 @@ public class GroupActivity extends AppCompatActivity {
         single_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //intent naar temp event creation
+                //TODO intent naar temp event creation
             }
         });
         group_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //intent naar group creation view
+                //TODO intent naar group creation view
             }
         });
 

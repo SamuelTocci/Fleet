@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(AccessToken.getCurrentAccessToken() != null){
+        if(AccessToken.getCurrentAccessToken() != null && id != null){
             if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
                 httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
             }
@@ -91,7 +91,22 @@ public class MainActivity extends AppCompatActivity {
         logo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AccessToken.getCurrentAccessToken() != null){
+                GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.d("demo", object.toString());
+                        try {
+                            id = object.getString("id");
+                            firstName = object.getString("first_name");
+                            lastName = object.getString("last_name");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
+                if(AccessToken.getCurrentAccessToken() != null && id != null){
                     if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
                         httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
                     }
@@ -132,11 +147,7 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-
+    public void graphRequest(){
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -152,9 +163,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bundle bundle = new Bundle();
-        bundle.putString("fields", "name, id, first_name, last_name, friends");
+        bundle.putString("fields", "name, id, first_name, last_name");
         graphRequest.setParameters(bundle);
         graphRequest.executeAsync();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        graphRequest();
     }
 
     AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {

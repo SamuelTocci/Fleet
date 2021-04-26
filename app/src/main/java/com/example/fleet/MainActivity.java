@@ -1,21 +1,21 @@
 package com.example.fleet;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -26,22 +26,11 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -52,13 +41,16 @@ public class MainActivity extends AppCompatActivity {
     private String id;
     private ImageView logo_btn;
     private String firstName, lastName;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestQueue = Volley.newRequestQueue(this);
 
-        if(AccessToken.getCurrentAccessToken() != null && id != null){
+        graphRequest();
+        if (AccessToken.getCurrentAccessToken() != null && id != null) {
             createUserSQL();
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
             intent.putExtra("userId", id);
@@ -73,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setPermissions(Arrays.asList("user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) { Log.d("demo ", "login successful"); }
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("demo ", "login successful");
+            }
 
             @Override
             public void onCancel() {
@@ -89,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         logo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graphRequest();
-                if(AccessToken.getCurrentAccessToken() != null && id != null){
+                Log.d("demo", id);
+                if (AccessToken.getCurrentAccessToken() != null && id != null) {
                     createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
                     intent.putExtra("userId", id);
@@ -100,36 +94,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<String> httpRequest(String url) {
-        ArrayList<String> output = new ArrayList<>();
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                BufferedReader in = null;
-                try {
-                    URL myURL = new URL(url);
-                    URLConnection myURLConnection = myURL.openConnection();
-                    myURLConnection.connect();
-
-                    in = new BufferedReader(new InputStreamReader(
-                            myURLConnection.getInputStream()));
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null) {
-                        output.add(inputLine);
-                    }
-                    in.close();
-                } catch (MalformedURLException e) {
-                    Log.d("demo", e.toString());
-                } catch (IOException e) {
-                    Log.d("demo", e.toString());
-                }
-            }
-        }).start();
-        return output;
-    }
-
-    //TODO id is altijd null momenteel
-    public void graphRequest(){
+    public void graphRequest() {
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -150,10 +115,39 @@ public class MainActivity extends AppCompatActivity {
         graphRequest.executeAsync();
     }
 
-    public void createUserSQL(){
-        if(httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/"+ id) == null){
-            httpRequest("https://studev.groept.be/api/a20sd108/add_user/"+ id + "/" + firstName + "/" + lastName );
-        }
+    public void createUserSQL() {
+//        if (httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/" + id) == new ArrayList<String>()) {
+            httpSubmit("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName);
+        //}
+    }
+
+    public ArrayList<String> httpRequest(String url) {
+        ArrayList<String> result = new ArrayList<>();
+        JsonArrayRequest queueRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                result.add(response.toString());
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        return result;
+    }
+    public void httpSubmit(String url) {
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("demo",response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(submitRequest);
     }
 
     @Override

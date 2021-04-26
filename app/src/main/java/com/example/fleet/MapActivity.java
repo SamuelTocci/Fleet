@@ -15,12 +15,14 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_view);
+        User user = getIntent().getExtras().getParcelable("user");
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MapActivity.this, GroupActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
             }

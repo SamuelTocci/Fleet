@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView logo_btn;
     private String firstName, lastName;
     private RequestQueue requestQueue;
+    private User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
             createUserSQL();
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
-            intent.putExtra("userId", id);
+            intent.putExtra("user", user);
             startActivity(intent);
         }
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
                     createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
-                    intent.putExtra("userId", id);
+                    intent.putExtra("user", user);
                     startActivity(intent);
                 }
             }
@@ -100,8 +101,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("demo", object.toString());
                 try {
                     id = object.getString("id");
+                    user.setId(id);
                     firstName = object.getString("first_name");
+                    user.setFirst_name(firstName);
                     lastName = object.getString("last_name");
+                    user.setLast_name(lastName);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

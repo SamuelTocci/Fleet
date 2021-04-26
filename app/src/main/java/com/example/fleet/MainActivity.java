@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         graphRequest();
+
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
             createUserSQL();
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
@@ -83,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         logo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("demo", id);
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
                     createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
@@ -116,31 +116,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createUserSQL() {
-//        if (httpRequest("https://studev.groept.be/api/a20sd108/user_info_req/" + id) == new ArrayList<String>()) {
-            httpSubmit("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName);
-        //}
+        //SQL zorgt voor unique user, geen extra request nodig
+        httpRequest("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName);
     }
-
-    public ArrayList<String> httpRequest(String url) {
-        ArrayList<String> result = new ArrayList<>();
-        JsonArrayRequest queueRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                result.add(response.toString());
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        return result;
-    }
-    public void httpSubmit(String url) {
+    public void httpRequest(String url) {
         StringRequest submitRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("demo",response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -171,6 +153,4 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         accessTokenTracker.stopTracking();
     }
-
-
 }

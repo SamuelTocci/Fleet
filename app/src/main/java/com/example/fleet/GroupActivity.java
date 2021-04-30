@@ -1,6 +1,7 @@
 package com.example.fleet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.appevents.suggestedevents.ViewOnClickListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.channels.ClosedByInterruptException;
 import java.security.acl.Group;
@@ -47,9 +49,14 @@ public class GroupActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         ImageView userPicture = findViewById(R.id.user_picture);
-        String userId = getIntent().getStringExtra("userId");
-        Picasso.get().load("https://graph.facebook.com/"+ userId + "/picture?type=large")
-                    .into(userPicture);
+        User user = getIntent().getExtras().getParcelable("user");
+
+        try {
+            Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());
+            userPicture.setImageBitmap(mBitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         add_btn = findViewById(R.id.add_btn);
         settings = findViewById(R.id.settings);
@@ -89,6 +96,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupActivity.this, SettingsActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
             }
@@ -112,6 +120,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupActivity.this, QRactivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
             }
@@ -129,7 +138,7 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, s1, s2, images);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, s1, s2, images, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -22,12 +22,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     int[] images;
     Context context;
     Activity activity;
+    User user;
 
-    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img){ //[[1,2,3],[5,1,8]]
+    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img, User user){ //[[1,2,3],[5,1,8]]
         context = ct;
         data1 = s1;
         data2 = s2;
         images = img;
+        this.user = user;
     }
 
     @NonNull
@@ -49,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 Activity activity = (Activity) context;
                 Intent intent = new Intent(context, MapActivity.class);
+                intent.putExtra("user", user);
                 context.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
             }

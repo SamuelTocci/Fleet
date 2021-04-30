@@ -40,18 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private String id;
     private ImageView logo_btn;
     private String firstName, lastName;
-    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestQueue = Volley.newRequestQueue(this);
+        HttpHandler databaseReq = new HttpHandler();
 
         graphRequest();
 
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
-            createUserSQL();
             Intent intent = new Intent(MainActivity.this, GroupActivity.class);
             intent.putExtra("userId", id);
             startActivity(intent);
@@ -66,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                databaseReq.httpRequest("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName, getApplicationContext());
                 Log.d("demo ", "login successful");
             }
 
@@ -84,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
-                    createUserSQL();
                     Intent intent = new Intent(MainActivity.this, GroupActivity.class);
                     intent.putExtra("userId", id);
                     startActivity(intent);
@@ -112,23 +110,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("fields", "name, id, first_name, last_name");
         graphRequest.setParameters(bundle);
         graphRequest.executeAsync();
-    }
-
-    public void createUserSQL() {
-        //SQL zorgt voor unique user, geen extra request nodig
-        httpRequest("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName);
-    }
-    public void httpRequest(String url) {
-        StringRequest submitRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(submitRequest);
     }
 
     @Override

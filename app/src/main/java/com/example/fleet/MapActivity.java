@@ -1,21 +1,45 @@
 package com.example.fleet;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceFragmentCompat;
 
-public class MapActivity extends AppCompatActivity {
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.MapView;
+
+public class MapActivity extends AppCompatActivity{
     private ImageView groups_button;
+    MapView map = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_view);
         User user = getIntent().getExtras().getParcelable("user");
+
+        //handle permissions first, before map is created. not depicted here
+
+        //load/initialize the osmdroid configuration, this can be done
+        Context ctx = getApplicationContext();
+        //TODO depricated shit veranderen hier
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        //setting this before the layout is inflated is a good idea
+        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
+        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
+        //see also StorageUtils
+        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
+
+        setContentView(R.layout.event_view);
+
+        map = (MapView) findViewById(R.id.openmapview);
+        map.setTileSource(TileSourceFactory.MAPNIK);
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {
@@ -28,19 +52,21 @@ public class MapActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void getData(){
-//        if(getIntent().hasExtra("images") && getIntent().hasExtra("data1") &&
-//                getIntent().hasExtra("data2")){
-//
-//            data1 = getIntent().getStringExtra("data1");
-//            data2 = getIntent().getStringExtra("data2");
-//            image = getIntent().getIntExtra("images", 1);
-//        }
+    public void onResume(){
+        super.onResume();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
     }
 
-    private void setData(){
-        //set alle gegevens
+    public void onPause(){
+        super.onPause();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().save(this, prefs);
+        map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
 }

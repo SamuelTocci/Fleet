@@ -16,10 +16,13 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 public class MapActivity extends AppCompatActivity{
     private ImageView groups_button;
     MapView map = null;
+    private MyLocationNewOverlay mLocationOverlay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +47,13 @@ public class MapActivity extends AppCompatActivity{
         map.setTileSource(TileSourceFactory.MAPNIK);
 
         IMapController mapController = map.getController();
-        mapController.setZoom(20);
+        mapController.setZoom(20.0);
         GeoPoint startPoint = new GeoPoint(50.886874, 4.699761);
         mapController.setCenter(startPoint);
+        // dit werkt ni ma mss permissions vragen fzo
+        //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        //        this.mLocationOverlay.enableMyLocation();
+        //        map.getOverlays().add(this.mLocationOverlay);
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {

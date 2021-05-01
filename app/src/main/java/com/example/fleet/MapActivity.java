@@ -11,8 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
+import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 public class MapActivity extends AppCompatActivity{
@@ -40,6 +42,11 @@ public class MapActivity extends AppCompatActivity{
 
         map = (MapView) findViewById(R.id.openmapview);
         map.setTileSource(TileSourceFactory.MAPNIK);
+
+        IMapController mapController = map.getController();
+        mapController.setZoom(20);
+        GeoPoint startPoint = new GeoPoint(50.886874, 4.699761);
+        mapController.setCenter(startPoint);
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {

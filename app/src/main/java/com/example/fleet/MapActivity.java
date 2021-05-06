@@ -95,11 +95,6 @@ public class MapActivity extends AppCompatActivity{
                 rv_card_small.setVisibility(View.VISIBLE);
                 rv_small.setVisibility(View.VISIBLE);
 
-                rv_card_small.clearAnimation();
-                rv_small.clearAnimation();
-                rv_card_small.startAnimation(animSlideUp);
-                rv_small.startAnimation(animSlideUp);
-
                 animSlideUp.reset();
                 rv_card_extended.clearAnimation();
                 rv_extended.clearAnimation();
@@ -125,11 +120,11 @@ public class MapActivity extends AppCompatActivity{
                 rv_card_small.startAnimation(animSlideDown);
                 rv_small.startAnimation(animSlideDown);
 
-                animSlideUp.reset();
-                rv_card_extended.clearAnimation();
-                rv_extended.clearAnimation();
-                rv_card_extended.startAnimation(animSlideUp);
-                rv_extended.startAnimation(animSlideUp);
+//                animSlideUp.reset();
+//                rv_card_extended.clearAnimation();
+//                rv_extended.clearAnimation();
+//                rv_card_extended.startAnimation(animSlideUp);
+//                rv_extended.startAnimation(animSlideUp);
 
                 rv_card_small.setVisibility(View.GONE);
                 rv_small.setVisibility(View.GONE);
@@ -140,8 +135,8 @@ public class MapActivity extends AppCompatActivity{
         rv_small.setAdapter(rva_small);
         rv_small.setLayoutManager(new GridLayoutManager(this,6));
         PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images);
-        rv_small.setAdapter(rva_extended);
-        rv_small.setLayoutManager(new GridLayoutManager(this,6));
+        rv_extended.setAdapter(rva_extended);
+        rv_extended.setLayoutManager(new GridLayoutManager(this,6));
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {

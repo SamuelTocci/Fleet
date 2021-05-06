@@ -81,7 +81,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/rv_people_extended"
-            android:padding="4dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" />
 
@@ -95,15 +94,15 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="408dp"
-            android:layout_height="115dp"
+            android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/people_card"
             app:layout_constraintTop_toTopOf="@+id/people_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/rv_people"
-            android:padding="4dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp" />
+            android:layout_marginEnd="20dp"
+            android:layout_height="100dp"
+            android:nestedScrollingEnabled="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

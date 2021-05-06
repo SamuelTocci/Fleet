@@ -81,10 +81,10 @@ public class MapActivity extends AppCompatActivity{
 
         PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images);
         rv_small.setAdapter(rva_small);
-        rv_small.setLayoutManager(new GridLayoutManager(this,5));
+        rv_small.setLayoutManager(new GridLayoutManager(this,6));
         PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images);
         rv_small.setAdapter(rva_extended);
-        rv_small.setLayoutManager(new GridLayoutManager(this,5));
+        rv_small.setLayoutManager(new GridLayoutManager(this,6));
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {

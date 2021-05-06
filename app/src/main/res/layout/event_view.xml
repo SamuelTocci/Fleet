@@ -102,7 +102,7 @@
             android:id="@+id/rv_people"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_height="100dp"
+            android:layout_height="112dp"
             android:nestedScrollingEnabled="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

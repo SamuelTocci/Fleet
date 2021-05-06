@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -24,6 +26,8 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.util.Arrays;
+
 public class MapActivity extends AppCompatActivity{
     private ImageView groups_button;
     MapView map = null;
@@ -32,6 +36,7 @@ public class MapActivity extends AppCompatActivity{
     private RecyclerView rv_small,rv_extended;
     private ImageView rv_card_small, rv_card_extended;
     private int[] images = {R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1};
+    private ImageView cancel_btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,12 +77,64 @@ public class MapActivity extends AppCompatActivity{
         //startMarker.setIcon(marker);
         map.getOverlays().add(startMarker);
 
+        Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
         rv_small = findViewById(R.id.rv_people);
         rv_card_small = findViewById(R.id.people_card);
         rv_extended = findViewById(R.id.rv_people_extended);
         rv_card_extended = findViewById(R.id.people_card_extended);
+        cancel_btn = findViewById(R.id.cancel_btn);
         rv_extended.setVisibility(View.GONE);
         rv_card_extended.setVisibility(View.GONE);
+        cancel_btn.setVisibility(View.GONE);
+
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rv_card_small.setVisibility(View.VISIBLE);
+                rv_small.setVisibility(View.VISIBLE);
+
+                rv_card_small.clearAnimation();
+                rv_small.clearAnimation();
+                rv_card_small.startAnimation(animSlideUp);
+                rv_small.startAnimation(animSlideUp);
+
+                animSlideUp.reset();
+                rv_card_extended.clearAnimation();
+                rv_extended.clearAnimation();
+                rv_card_extended.startAnimation(animSlideDown);
+                rv_extended.startAnimation(animSlideDown);
+
+                rv_card_extended.setVisibility(View.GONE);
+                rv_extended.setVisibility(View.GONE);
+                cancel_btn.setVisibility(View.GONE);
+            }
+        });
+
+
+        rv_card_small.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rv_card_extended.setVisibility(View.VISIBLE);
+                rv_extended.setVisibility(View.VISIBLE);
+                cancel_btn.setVisibility(View.VISIBLE);
+
+                rv_card_small.clearAnimation();
+                rv_small.clearAnimation();
+                rv_card_small.startAnimation(animSlideDown);
+                rv_small.startAnimation(animSlideDown);
+
+                animSlideUp.reset();
+                rv_card_extended.clearAnimation();
+                rv_extended.clearAnimation();
+                rv_card_extended.startAnimation(animSlideUp);
+                rv_extended.startAnimation(animSlideUp);
+
+                rv_card_small.setVisibility(View.GONE);
+                rv_small.setVisibility(View.GONE);
+            }
+        });
 
         PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images);
         rv_small.setAdapter(rva_small);

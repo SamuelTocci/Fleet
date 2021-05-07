@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static java.security.AccessController.getContext;
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
     String[] data1;
@@ -74,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             description = itemView.findViewById(R.id.group_description);
             groupName = itemView.findViewById(R.id.group_name);
-            picture = itemView.findViewById(R.id.person_1);
+            picture = itemView.findViewById(R.id.profile_pic);
             recycler_row = itemView.findViewById(R.id.recycler_row);
         }
     }

@@ -27,7 +27,7 @@
                     android:layout_width="38dp"
                     android:layout_height="38dp"
                     app:srcCompat="@android:drawable/sym_def_app_icon"
-                    android:id="@+id/person_1"
+                    android:id="@+id/profile_pic"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="24dp"
                     app:shapeAppearanceOverlay="@style/profilePictures"
@@ -39,8 +39,8 @@
                     android:layout_height="38dp"
                     app:srcCompat="@android:drawable/sym_def_app_icon"
                     android:id="@+id/person_2"
-                    app:layout_constraintStart_toEndOf="@+id/person_1"
-                    app:layout_constraintTop_toTopOf="@+id/person_1"
+                    app:layout_constraintStart_toEndOf="@+id/profile_pic"
+                    app:layout_constraintTop_toTopOf="@+id/profile_pic"
                     app:shapeAppearanceOverlay="@style/profilePictures"
                     android:layout_marginStart="2dp" />
 

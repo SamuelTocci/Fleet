@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,8 @@ public class MapActivity extends AppCompatActivity{
     private ImageView rv_card_small, rv_card_extended;
     private int[] images = {R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1};
     private ImageView cancel_btn;
+    private ImageView changeLocation_card;
+    private TextView changeLocation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class MapActivity extends AppCompatActivity{
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
+        changeLocation = findViewById(R.id.tv_changeLocation);
+        changeLocation_card = findViewById(R.id.iv_changeLocation);
+
         rv_small = findViewById(R.id.rv_people);
         rv_card_small = findViewById(R.id.people_card);
         rv_extended = findViewById(R.id.rv_people_extended);
@@ -104,6 +110,9 @@ public class MapActivity extends AppCompatActivity{
                 rv_card_extended.setVisibility(View.GONE);
                 rv_extended.setVisibility(View.GONE);
                 cancel_btn.setVisibility(View.GONE);
+
+                changeLocation.setVisibility(View.VISIBLE);
+                changeLocation_card.setVisibility(View.VISIBLE);
             }
         });
 
@@ -128,6 +137,9 @@ public class MapActivity extends AppCompatActivity{
 
                 rv_card_small.setVisibility(View.GONE);
                 rv_small.setVisibility(View.GONE);
+
+                changeLocation.setVisibility(View.GONE);
+                changeLocation_card.setVisibility(View.GONE);
             }
         });
 

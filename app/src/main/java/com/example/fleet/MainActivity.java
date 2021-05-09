@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private String firstName, lastName;
     private RequestQueue requestQueue;
     private User user = new User();
+    private Boolean guiResponseFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,57 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void httpGroupIdList(String url) {
+        JsonArrayRequest guiRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+//                user.setGroupIdList();
+                try{
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject;
+
+                    for (int i = 0; i < response.length(); i++) {
+                        jsonObject = response.getJSONObject(i);
+                        user.addGroupIdtoBundle(jsonObject.get("groupID").toString());
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        JsonArrayRequest gndRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+//                user.setGroupIdList();
+                try{
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject;
+                    ArrayList<String> responseList = new ArrayList<>();
+
+                    for (int i = 0; i < response.length(); i++) {
+                        jsonObject = response.getJSONObject(i);
+                        //user.addGroupIdtoBundle(jsonObject.get("groupID").toString());//TODO group name en description opvragen en in user plaatsen
+                    }
+                    requestQueue.add(guiRequest);
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(gndRequest);
     }
 
     public void graphRequest() {

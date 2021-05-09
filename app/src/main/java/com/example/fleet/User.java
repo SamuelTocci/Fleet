@@ -3,6 +3,7 @@ package com.example.fleet;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Parcelable {
     private String id;
@@ -17,10 +19,10 @@ public class User implements Parcelable {
     private String last_name;
     private String nick_name;
     private Bitmap pfPic;
-    private ArrayList<String> groupIdList;
+    private Bundle groupList;
 
     public User() {
-        this.groupIdList = new ArrayList<>();
+        this.groupList = new Bundle();
     }
 
     protected User(Parcel in) {
@@ -28,7 +30,7 @@ public class User implements Parcelable {
         first_name = in.readString();
         last_name = in.readString();
         nick_name = in.readString();
-        groupIdList = in.createStringArrayList();
+        groupList = in.readBundle();//TODO checken of classloader nodig is
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -64,8 +66,13 @@ public class User implements Parcelable {
         return pfPic;
     }
 
-    public ArrayList<String> getGroupIdList() {
-        return groupIdList;
+    public void addGroupIdtoBundle(String groupId) {
+        ArrayList<Parcelable> arr = new ArrayList<>();
+        this.groupList.putParcelableArrayList(groupId, arr);
+    }
+
+    public Bundle getGroupsBundle() {
+        return groupList;
     }
 
     //Setters
@@ -114,6 +121,6 @@ public class User implements Parcelable {
         dest.writeString(first_name);
         dest.writeString(last_name);
         dest.writeString(nick_name);
-        dest.writeStringList(groupIdList);
+        dest.writeBundle(groupList);
     }
 }

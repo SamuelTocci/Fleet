@@ -14,8 +14,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.facebook.appevents.suggestedevents.ViewOnClickListener;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -41,6 +51,8 @@ public class GroupActivity extends AppCompatActivity {
 
     private ImageView add_btn;
     private ImageView settings;
+    private RequestQueue requestQueue;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +61,8 @@ public class GroupActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         ImageView userPicture = findViewById(R.id.user_picture);
-        User user = getIntent().getExtras().getParcelable("user");
+        user = getIntent().getExtras().getParcelable("user");
+//        httpGroupIdList("https://studev.groept.be/api/a20sd108/get_all_groups_from_user/" + );
 
         try {
             Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());

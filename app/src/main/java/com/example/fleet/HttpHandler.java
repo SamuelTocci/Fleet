@@ -1,6 +1,7 @@
 package com.example.fleet;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +33,8 @@ public class HttpHandler{
             @Override
             public void onResponse(JSONArray response) {
                 responseData = response;
+                Log.d("demo","response");
+
             }
         }, new Response.ErrorListener() {
             @Override

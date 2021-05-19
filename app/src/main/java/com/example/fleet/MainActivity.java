@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private String firstName, lastName;
     private User user = new User();
     private Boolean guiResponseFlag = false;
+    private ArrayList<Group> groups;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
         graphRequest();
 
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
-            Intent intent = new Intent(MainActivity.this, GroupActivity.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
+            goToGroup();
         }
 
         loginButton = findViewById(R.id.login_button);
@@ -85,64 +86,63 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
-                    Intent intent = new Intent(MainActivity.this, GroupActivity.class);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
+                    goToGroup();
                 }
             }
         });
     }
 
-    public void httpGroupIdList(String url) {
-        JsonArrayRequest guiRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-//                user.setGroupIdList();
-                try{
-                    JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject;
 
-                    for (int i = 0; i < response.length(); i++) {
-                        jsonObject = response.getJSONObject(i);
-                        user.addGroupIdtoBundle(jsonObject.get("groupID").toString());
-                    }
-                }
-                catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-
-        JsonArrayRequest gndRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-//                user.setGroupIdList();
-                try{
-                    JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject;
-                    ArrayList<String> responseList = new ArrayList<>();
-
-                    for (int i = 0; i < response.length(); i++) {
-                        jsonObject = response.getJSONObject(i);
-                        //user.addGroupIdtoBundle(jsonObject.get("groupID").toString());//TODO group name en description opvragen en in user plaatsen
-                    }
-                    requestQueue.add(guiRequest);
-                }
-                catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(gndRequest);
-    }
+//    public void httpGroupIdList(String url) {
+//        JsonArrayRequest guiRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+////                user.setGroupIdList();
+//                try{
+//                    JSONArray jsonArray = new JSONArray(response);
+//                    JSONObject jsonObject;
+//
+//                    for (int i = 0; i < response.length(); i++) {
+//                        jsonObject = response.getJSONObject(i);
+//                        user.addGroupIdtoBundle(jsonObject.get("groupID").toString());
+//                    }
+//                }
+//                catch (JSONException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//            }
+//        });
+//
+//        JsonArrayRequest gndRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+////                user.setGroupIdList();
+//                try{
+//                    JSONArray jsonArray = new JSONArray(response);
+//                    JSONObject jsonObject;
+//                    ArrayList<String> responseList = new ArrayList<>();
+//
+//                    for (int i = 0; i < response.length(); i++) {
+//                        jsonObject = response.getJSONObject(i);
+//                        //user.addGroupIdtoBundle(jsonObject.get("groupID").toString());//TODO group name en description opvragen en in user plaatsen
+//                    }
+//                    requestQueue.add(guiRequest);
+//                }
+//                catch (JSONException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//            }
+//        });
+//        requestQueue.add(gndRequest);
+//    }
 
     public void graphRequest() {
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -188,5 +188,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         accessTokenTracker.stopTracking();
+    }
+
+    public void goToGroup(){
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_groups_from_user/" + user.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //hier moet het maken van de groups gebeuren denk ik
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(submitRequest);
+
+        Intent intent = new Intent(MainActivity.this, GroupActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("groups", groups);
+        startActivity(intent);
     }
 }

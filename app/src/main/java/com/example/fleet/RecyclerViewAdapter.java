@@ -13,6 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
     String[] data1;
@@ -21,6 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     Activity activity;
     User user;
+    private RequestQueue requestQueue;
 
     public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img, User user){ //[[1,2,3],[5,1,8]]
         context = ct;
@@ -28,6 +35,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         data2 = s2;
         images = img;
         this.user = user;
+    }
+    //groupname, description, [userid]
+    public void httpRequest(String url) {
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(submitRequest);
     }
 
     @NonNull

@@ -76,8 +76,8 @@ public class MapActivity extends AppCompatActivity{
 
         Marker startMarker = new Marker(map);
         startMarker.setPosition(startPoint);
+        startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        //startMarker.setIcon(marker);
         map.getOverlays().add(startMarker);
 
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
@@ -124,16 +124,16 @@ public class MapActivity extends AppCompatActivity{
                 rv_extended.setVisibility(View.VISIBLE);
                 cancel_btn.setVisibility(View.VISIBLE);
 
-                rv_card_small.clearAnimation();
-                rv_small.clearAnimation();
-                rv_card_small.startAnimation(animSlideDown);
-                rv_small.startAnimation(animSlideDown);
+//                rv_card_small.clearAnimation();
+//                rv_small.clearAnimation();
+//                rv_card_small.startAnimation(animSlideDown);
+//                rv_small.startAnimation(animSlideDown);
 
-//                animSlideUp.reset();
-//                rv_card_extended.clearAnimation();
-//                rv_extended.clearAnimation();
-//                rv_card_extended.startAnimation(animSlideUp);
-//                rv_extended.startAnimation(animSlideUp);
+                animSlideUp.reset();
+                rv_card_extended.clearAnimation();
+                rv_extended.clearAnimation();
+                rv_card_extended.startAnimation(animSlideUp);
+                rv_extended.startAnimation(animSlideUp);
 
                 rv_card_small.setVisibility(View.GONE);
                 rv_small.setVisibility(View.GONE);

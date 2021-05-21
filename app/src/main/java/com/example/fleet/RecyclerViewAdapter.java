@@ -3,6 +3,7 @@ package com.example.fleet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,36 +20,24 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.util.ArrayList;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
     String[] data1;
     String[] data2;
-    int[] images;
+    private int[] images;
     Context context;
     Activity activity;
     User user;
     private RequestQueue requestQueue;
+    private ArrayList<String> groupNameList,groupDescriptionList = new ArrayList<>();
 
-    public RecyclerViewAdapter(Context ct, String[] s1, String[] s2, int[] img, User user){ //[[1,2,3],[5,1,8]]
-        context = ct;
-        data1 = s1;
-        data2 = s2;
-        images = img;
+    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList, User user){ //[[1,2,3],[5,1,8]]
+        this.context = context;
+        this.groupNameList = groupNameList;
+        this.groupDescriptionList = groupDescriptionList;
         this.user = user;
-    }
-    //groupname, description, [userid]
-    public void httpRequest(String url) {
-        StringRequest submitRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(submitRequest);
     }
 
     @NonNull
@@ -61,9 +50,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        holder.description.setText(data1[position]);
-        holder.groupName.setText(data2[position]);
-        holder.picture.setImageResource(images[position]);
+        holder.description.setText(groupDescriptionList.get(position));
+        holder.groupName.setText(groupNameList.get(position));
+//        holder.picture.setImageResource(images[position]);
 
         holder.recycler_row.setOnClickListener(new View.OnClickListener() {
             @Override

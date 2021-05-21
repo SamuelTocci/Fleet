@@ -14,27 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.facebook.appevents.suggestedevents.ViewOnClickListener;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.channels.ClosedByInterruptException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Iterator;
 
 @SuppressWarnings("unchecked")
 public class GroupActivity extends AppCompatActivity {
@@ -43,16 +28,16 @@ public class GroupActivity extends AppCompatActivity {
     private ArrayList<Integer> GroupIdList = new ArrayList();
 
     //TODO data van sql in datastructuur zetten
-    private String[] s1 = {"test category"};
-    private String[] s2 = {"group name"};
-    private int[] images = {R.drawable.testperson1};
-    private Map<Integer, ArrayList<User>> userMap = new HashMap<>();
+//    private String[] s1 = {"test category"};
+//    private String[] s2 = {"group name"};
+//    private int[] images = {R.drawable.testperson1};
+    private Bundle groupBundle;
 
     private ImageView add_btn;
     private ImageView settings;
     private RequestQueue requestQueue;
     private User user;
-    private ArrayList<Group> groups;
+    private ArrayList<String> groupNameList,groupDescriptionList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,10 +47,10 @@ public class GroupActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         ImageView userPicture = findViewById(R.id.user_picture);
         user = getIntent().getExtras().getParcelable("user");
-        groups = getIntent().getExtras().getParcelable("groups");
+        groupBundle = user.getGroupsBundle();
 
         try {
-            Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());
+            Bitmap mBitmap = user.getFacebookProfilePicture();
             userPicture.setImageBitmap(mBitmap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,20 +123,40 @@ public class GroupActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
             }
         });
+        group_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupActivity.this, GroupCreateActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
+            }
+        });
+
         single_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO intent naar temp event creation
             }
         });
-        group_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO intent naar group creation view
-            }
-        });
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, s1, s2, images, user);
+
+//        Log.d("demo", groupBundle.toString());
+//
+//        for (String key : groupBundle.keySet()){
+//            Group group = groupBundle.getParcelable(key);
+//            groupNameList.add(group.getName());
+//            groupDescriptionList.add(group.getDescription());
+//        }
+
+//        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
+//            String key = it.next();
+//            Group group = groupBundle.getParcelable(key);
+//            groupNameList.add(group.getName());
+//            groupDescriptionList.add(group.getDescription());
+//        }
+
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList,groupDescriptionList, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

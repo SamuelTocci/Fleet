@@ -53,7 +53,9 @@
             app:frameAspectRatioHeight="1"
             app:frameSize="0.6"
             app:frameThickness="3dp"
-            app:maskColor="@color/colorPrimary"/>
+            app:maskColor="@color/colorPrimary"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
             android:layout_width="wrap_content"

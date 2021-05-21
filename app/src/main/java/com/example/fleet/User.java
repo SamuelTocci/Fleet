@@ -93,7 +93,7 @@ public class User implements Parcelable {
     }
 
     //functions
-    public Bitmap getFacebookProfilePicture(String id) throws IOException {
+    public Bitmap getFacebookProfilePicture() throws IOException {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

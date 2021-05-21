@@ -11,7 +11,7 @@ public class Group implements Parcelable {
     private String id;
     private String name;
     private String description;
-    private ArrayList<User> users;
+    private ArrayList<String> users = new ArrayList<>();
 
     public Group(String id, String name, String description){
         this.id = id;
@@ -23,7 +23,7 @@ public class Group implements Parcelable {
         description = in.readString();
         id = in.readString();
         name = in.readString();
-        users = in.createTypedArrayList(User.CREATOR);
+        users = in.readArrayList(null);
     }
 
     public static final Creator<Group> CREATOR = new Creator<Group>() {
@@ -50,7 +50,7 @@ public class Group implements Parcelable {
         return name;
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<String> getUsers() {
         return users;
     }
 
@@ -62,8 +62,8 @@ public class Group implements Parcelable {
         this.name = name;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public void setUsers(String userid) {
+        this.users.add(userid.toString());
     }
 
     @Override
@@ -76,6 +76,6 @@ public class Group implements Parcelable {
         dest.writeString(description);
         dest.writeString(id);
         dest.writeString(name);
-        dest.writeTypedList(users);
+        dest.writeList(users);
     }
 }

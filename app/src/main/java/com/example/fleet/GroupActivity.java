@@ -52,7 +52,6 @@ public class GroupActivity extends AppCompatActivity {
     private ImageView settings;
     private RequestQueue requestQueue;
     private User user;
-    private ArrayList<Group> groups;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +61,6 @@ public class GroupActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         ImageView userPicture = findViewById(R.id.user_picture);
         user = getIntent().getExtras().getParcelable("user");
-        groups = getIntent().getExtras().getParcelable("groups");
 
         try {
             Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());

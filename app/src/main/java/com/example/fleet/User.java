@@ -66,9 +66,8 @@ public class User implements Parcelable {
         return pfPic;
     }
 
-    public void addGroupIdtoBundle(String groupId) {
-        ArrayList<Parcelable> arr = new ArrayList<>();
-        this.groupList.putParcelableArrayList(groupId, arr);
+    public void addGroupToBundle(Group group) {
+        groupList.putParcelable(group.getId(), group);
     }
 
     public Bundle getGroupsBundle() {

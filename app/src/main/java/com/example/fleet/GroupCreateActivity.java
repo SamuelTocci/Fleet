@@ -47,7 +47,6 @@ public class GroupCreateActivity extends AppCompatActivity {
 
         confirmBtn = findViewById(R.id.confirmButton);
         confirmBtn.setOnClickListener(v -> {
-            //intent en gegevens in databank zetten
             if (!groupNameInput.getText().toString().equals("")) {
                 doEverything();
             } else {

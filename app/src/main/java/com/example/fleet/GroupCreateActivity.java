@@ -46,28 +46,21 @@ public class GroupCreateActivity extends AppCompatActivity {
         groupDescriptionInput = findViewById(R.id.groupDescriptionInput);
 
         confirmBtn = findViewById(R.id.confirmButton);
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //intent en gegevens in databank zetten
-                if (groupNameInput != null && groupDescriptionInput != null) {
-                    doEverything();
-                }
-                else{
-                    Toast.makeText(GroupCreateActivity.this, "All fields required", Toast.LENGTH_LONG).show();
-                }
+        confirmBtn.setOnClickListener(v -> {
+            //intent en gegevens in databank zetten
+            if (groupNameInput != null && groupDescriptionInput != null) {
+                doEverything();
             }
-
+            else{
+                Toast.makeText(GroupCreateActivity.this, "All fields required", Toast.LENGTH_LONG).show();
+            }
         });
         cancelBtn = findViewById(R.id.cancelBtn);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-            }
+        cancelBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
         });
     }
 
@@ -98,59 +91,35 @@ public class GroupCreateActivity extends AppCompatActivity {
     }
 
     public void getGroupIDs(){
-        JsonArrayRequest groupIDsRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_all_groups", null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject responseIDs = null;
-                    try {
-                        responseIDs = response.getJSONObject(i);
-                        groupIDs.add(responseIDs.getString("groupID"));
-                    }
-                    catch(JSONException e){
-                        e.printStackTrace();
-                    }
+        JsonArrayRequest groupIDsRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_all_groups", null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject responseIDs = null;
+                try {
+                    responseIDs = response.getJSONObject(i);
+                    groupIDs.add(responseIDs.getString("groupID"));
                 }
-                generateNewID();
+                catch(JSONException e){
+                    e.printStackTrace();
+                }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
+            generateNewID();
+        }, error -> {
         });
         requestQueue.add(groupIDsRequest);
     }
 
     public void makeGroup(){
-        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/add_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString(), null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                addUserToGroup();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
-            }
-        });
+        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/add_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString(), null, response -> addUserToGroup(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(newGroupRequest);
     }
 
     public void addUserToGroup(){
-        JsonArrayRequest addUserToGroupRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + newGroupID + "/" + user.getId(), null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(GroupCreateActivity.this, "The group was made but you were unable to be added", Toast.LENGTH_LONG).show();
-            }
-        });
+        JsonArrayRequest addUserToGroupRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + newGroupID + "/" + user.getId(), null, response -> {
+            Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+        }, error -> Toast.makeText(GroupCreateActivity.this, "The group was made but you were unable to be added", Toast.LENGTH_LONG).show());
         requestQueue.add( addUserToGroupRequest);
     }
 }

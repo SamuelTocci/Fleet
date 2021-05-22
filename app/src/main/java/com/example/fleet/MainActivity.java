@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
@@ -25,7 +23,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         graphRequest();
 
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
-            getGroupInfo();
+            goToGroupActivity();
         }
 
         loginButton = findViewById(R.id.login_button);
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
-                    getGroupInfo();
+                    goToGroupActivity();
                 }
             }
         });
@@ -102,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     user.setFirst_name(firstName);
                     lastName = object.getString("last_name");
                     user.setLast_name(lastName);
-                    getGroupInfo();
+                    goToGroupActivity();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -134,24 +131,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         accessTokenTracker.stopTracking();
-    }
-
-    public void getGroupInfo() {
-        user.resetBundle();
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject groupInfo;
-                try {
-                    groupInfo = response.getJSONObject(i);
-                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            goToGroupActivity();
-        }, error -> {
-        });
-        requestQueue.add(groupInfoRequest);
     }
 
     public void goToGroupActivity() {

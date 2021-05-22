@@ -3,7 +3,6 @@ package com.example.fleet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,12 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 @SuppressWarnings("unchecked")
 public class GroupActivity extends AppCompatActivity {
@@ -49,7 +53,7 @@ public class GroupActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         ImageView userPicture = findViewById(R.id.user_picture);
         user = getIntent().getExtras().getParcelable("user");
-        groupBundle = user.getGroupsBundle();
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         try {
             Bitmap mBitmap = user.getFacebookProfilePicture();
@@ -141,7 +145,35 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-//
+//        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
+//            String key = it.next();
+//            Group group = groupBundle.getParcelable(key);
+//            groupNameList.add(group.getName());
+//            groupDescriptionList.add(group.getDescription());
+//        }
+        informRecycler();
+    }
+
+    private void informRecycler() {
+            user.resetBundle();
+            JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject groupInfo;
+                    try {
+                        groupInfo = response.getJSONObject(i);
+                        this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                groupBundle = user.getGroupsBundle();
+                recycler();
+            }, error -> {
+            });
+            requestQueue.add(groupInfoRequest);
+        }
+
+    private void recycler() {
         for (String key : groupBundle.keySet()){
             Group group = groupBundle.getParcelable(key);
             groupNameList.add(group.getName().toString());
@@ -149,16 +181,10 @@ public class GroupActivity extends AppCompatActivity {
             groupIdList.add(group.getId().toString());
         }
 
-//        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
-//            String key = it.next();
-//            Group group = groupBundle.getParcelable(key);
-//            groupNameList.add(group.getName());
-//            groupDescriptionList.add(group.getDescription());
-//        }
-
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 }
+

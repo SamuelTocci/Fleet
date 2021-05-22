@@ -2,8 +2,6 @@ package com.example.fleet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,17 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GroupCreateActivity extends AppCompatActivity {
     private EditText groupNameInput, groupDescriptionInput;
@@ -54,7 +48,7 @@ public class GroupCreateActivity extends AppCompatActivity {
             }
         });
         cancelBtn = findViewById(R.id.cancelBtn);
-        cancelBtn.setOnClickListener(v -> getGroupInfo());
+        cancelBtn.setOnClickListener(v -> goToGroupActivity());
     }
 
     public void doEverything() {
@@ -98,26 +92,8 @@ public class GroupCreateActivity extends AppCompatActivity {
     }
 
     public void makeGroup() {
-        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/make_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString()+ "/" + newGroupID + "/" + user.getId(), null, response -> getGroupInfo(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
+        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/make_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString()+ "/" + newGroupID + "/" + user.getId(), null, response -> goToGroupActivity(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(newGroupRequest);
-    }
-
-    public void getGroupInfo() {
-        user.resetBundle();
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject groupInfo;
-                try {
-                    groupInfo = response.getJSONObject(i);
-                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            goToGroupActivity();
-        }, error -> {
-        });
-        requestQueue.add(groupInfoRequest);
     }
 
     public void goToGroupActivity() {

@@ -1,9 +1,7 @@
 package com.example.fleet;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -47,7 +45,7 @@ public class QRactivity extends AppCompatActivity {
         cancelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGroupInfo();
+                goToGroupActivity();
             }
         });
 
@@ -78,7 +76,7 @@ public class QRactivity extends AppCompatActivity {
                         JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + result +"/" + user.getId(), null, new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                getGroupInfo();
+                                goToGroupActivity();
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -108,24 +106,6 @@ public class QRactivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
-    }
-
-    public void getGroupInfo() {
-        user.resetBundle();
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject groupInfo;
-                try {
-                    groupInfo = response.getJSONObject(i);
-                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            goToGroupActivity();
-        }, error -> {
-        });
-        requestQueue.add(groupInfoRequest);
     }
 
     public void goToGroupActivity() {

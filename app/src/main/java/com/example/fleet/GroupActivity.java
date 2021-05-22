@@ -81,7 +81,6 @@ public class GroupActivity extends AppCompatActivity {
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Log.d("demo ", "add button pressed");
                     Arrays.stream(addCard)
                             .forEach(e -> e.setVisibility(View.VISIBLE));
                     animSlideUp.reset();
@@ -142,8 +141,6 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-
-        Log.d("demo", groupBundle.keySet().toString());
 //
         for (String key : groupBundle.keySet()){
             Group group = groupBundle.getParcelable(key);

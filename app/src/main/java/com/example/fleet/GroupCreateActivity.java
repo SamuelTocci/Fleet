@@ -54,7 +54,7 @@ public class GroupCreateActivity extends AppCompatActivity {
             }
         });
         cancelBtn = findViewById(R.id.cancelBtn);
-        cancelBtn.setOnClickListener(v -> goToGroupActivity());
+        cancelBtn.setOnClickListener(v -> getGroupInfo());
     }
 
     public void doEverything() {
@@ -67,9 +67,6 @@ public class GroupCreateActivity extends AppCompatActivity {
             tempID = 1 + (int) (Math.random() * 999998);
         }
         newGroupID = String.valueOf(tempID);
-        Log.d("demo", newGroupID);
-        Log.d("demo", groupNameInput.getText().toString());
-        Log.d("demo", groupDescriptionInput.getText().toString());
         makeGroup();
 
     }
@@ -101,39 +98,18 @@ public class GroupCreateActivity extends AppCompatActivity {
     }
 
     public void makeGroup() {
-        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/add_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString(), null, response -> addUserToGroup(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
+        JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/make_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString()+ "/" + newGroupID + "/" + user.getId(), null, response -> getGroupInfo(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(newGroupRequest);
     }
 
-    public void addUserToGroup() {
-        JsonArrayRequest addUserToGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/link_group_to_user/" + newGroupID + "/" + user.getId(), null, response -> getAllGroups(), error -> Toast.makeText(GroupCreateActivity.this, "The group was made but you were unable to be added", Toast.LENGTH_LONG).show());
-        requestQueue.add(addUserToGroupRequest);
-    }
-
-    public void getAllGroups() {
-        JsonArrayRequest groupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_groups_from_user/" + user.getId(), null, response -> {
+    public void getGroupInfo() {
+        user.resetBundle();
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
             for (int i = 0; i < response.length(); i++) {
-                JSONObject responseGroups;
+                JSONObject groupInfo;
                 try {
-                    responseGroups = response.getJSONObject(i);
-                    getGroupInfo(responseGroups.getString("groupID"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, error -> {
-        });
-        requestQueue.add(groupRequest);
-    }
-
-    public void getGroupInfo(String groupID) {
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + groupID, null, response -> {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject groupInfos;
-                try {
-                    groupInfos = response.getJSONObject(i);
-                    user.addGroupToBundle(new Group(groupID, groupInfos.getString("name"), groupInfos.getString("description")));
-                    Log.d("demo", user.getGroupsBundle().toString());
+                    groupInfo = response.getJSONObject(i);
+                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -146,7 +122,7 @@ public class GroupCreateActivity extends AppCompatActivity {
 
     public void goToGroupActivity() {
         Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
-        intent.putExtra("user", user);
+        intent.putExtra("user", this.user);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }

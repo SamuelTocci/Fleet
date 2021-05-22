@@ -47,9 +47,7 @@ public class QRactivity extends AppCompatActivity {
         cancelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QRactivity.this, GroupActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_down);
+                getGroupInfo();
             }
         });
 
@@ -80,7 +78,7 @@ public class QRactivity extends AppCompatActivity {
                         JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + result +"/" + user.getId(), null, new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-
+                                getGroupInfo();
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -110,5 +108,30 @@ public class QRactivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
+    }
+
+    public void getGroupInfo() {
+        user.resetBundle();
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject groupInfo;
+                try {
+                    groupInfo = response.getJSONObject(i);
+                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            goToGroupActivity();
+        }, error -> {
+        });
+        requestQueue.add(groupInfoRequest);
+    }
+
+    public void goToGroupActivity() {
+        Intent intent = new Intent(QRactivity.this, GroupActivity.class);
+        intent.putExtra("user", this.user);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 }

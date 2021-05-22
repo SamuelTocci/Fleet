@@ -70,6 +70,8 @@ public class User implements Parcelable {
         groupList.putParcelable(group.getId(), group);
     }
 
+    public void resetBundle(){ this.groupList = new Bundle();}
+
     public Bundle getGroupsBundle() {
         return groupList;
     }

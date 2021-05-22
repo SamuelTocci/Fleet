@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         graphRequest();
 
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
-            goToGroupActivity();
+            getGroupInfo();
         }
 
         loginButton = findViewById(R.id.login_button);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (AccessToken.getCurrentAccessToken() != null && id != null) {
-                    goToGroupActivity();
+                    getGroupInfo();
                 }
             }
         });
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.d("demo", object.toString());
                 try {
                     id = object.getString("id");
                     user.setId(id);
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     user.setFirst_name(firstName);
                     lastName = object.getString("last_name");
                     user.setLast_name(lastName);
-                    getAllGroups();
+                    getGroupInfo();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -113,53 +112,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("fields", "name, id, first_name, last_name");
         graphRequest.setParameters(bundle);
         graphRequest.executeAsync();
-    }
-
-    public void getAllGroups(){
-        JsonArrayRequest groupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_groups_from_user/" + user.getId(), null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject responseGroups = null;
-                    try {
-                        responseGroups = response.getJSONObject(i);
-                        getGroupInfo(responseGroups.getString("groupID"));
-                    }
-                    catch(JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(groupRequest);
-    }
-
-    public void getGroupInfo(String groupID){
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_group_info/" + groupID, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject groupInfos = null;
-                    try {
-                        groupInfos = response.getJSONObject(i);
-                        user.addGroupToBundle(new Group(groupID, groupInfos.getString("name"), groupInfos.getString("description")));
-                        Log.d("demo", user.getGroupsBundle().toString());
-                    }
-                    catch(JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(groupInfoRequest);
     }
 
     @Override
@@ -182,6 +134,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         accessTokenTracker.stopTracking();
+    }
+
+    public void getGroupInfo() {
+        user.resetBundle();
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject groupInfo;
+                try {
+                    groupInfo = response.getJSONObject(i);
+                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            goToGroupActivity();
+        }, error -> {
+        });
+        requestQueue.add(groupInfoRequest);
     }
 
     public void goToGroupActivity() {

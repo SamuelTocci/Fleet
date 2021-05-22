@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GroupCreateActivity extends AppCompatActivity {
-    private EditText groupNameInput,groupDescriptionInput;
+    private EditText groupNameInput, groupDescriptionInput;
     private String newGroupID = null;
-    private ImageView confirmBtn,cancelBtn;
+    private ImageView confirmBtn, cancelBtn;
     private User user;
     private RequestQueue requestQueue;
     private ArrayList<String> groupIDs = new ArrayList<>();
@@ -48,57 +48,50 @@ public class GroupCreateActivity extends AppCompatActivity {
         confirmBtn = findViewById(R.id.confirmButton);
         confirmBtn.setOnClickListener(v -> {
             //intent en gegevens in databank zetten
-            if (groupNameInput != null && groupDescriptionInput != null) {
+            if (!groupNameInput.getText().toString().equals("")) {
                 doEverything();
-            }
-            else{
-                Toast.makeText(GroupCreateActivity.this, "All fields required", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(GroupCreateActivity.this, "Name is required", Toast.LENGTH_LONG).show();
             }
         });
         cancelBtn = findViewById(R.id.cancelBtn);
-        cancelBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-        });
+        cancelBtn.setOnClickListener(v -> goToGroupActivity());
     }
 
-    public void doEverything(){
+    public void doEverything() {
         getGroupIDs();
     }
 
-    public void generateNewID(){
+    public void generateNewID() {
         int tempID = 0;
-        while(exists() || tempID == 0) {
-            tempID = 1 + (int)(Math.random() * 999998);
+        while (exists() || tempID == 0) {
+            tempID = 1 + (int) (Math.random() * 999998);
         }
         newGroupID = String.valueOf(tempID);
-        Log.d("demo",newGroupID);
-        Log.d("demo",groupNameInput.getText().toString());
-        Log.d("demo",groupDescriptionInput.getText().toString());
+        Log.d("demo", newGroupID);
+        Log.d("demo", groupNameInput.getText().toString());
+        Log.d("demo", groupDescriptionInput.getText().toString());
         makeGroup();
 
     }
 
-    public boolean exists(){
-        for (String id: groupIDs){
-            if (id.equals(newGroupID)){
+    public boolean exists() {
+        for (String id : groupIDs) {
+            if (id.equals(newGroupID)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void getGroupIDs(){
-        JsonArrayRequest groupIDsRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_all_groups", null, response -> {
+    public void getGroupIDs() {
+        JsonArrayRequest groupIDsRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_groups", null, response -> {
             for (int i = 0; i < response.length(); i++) {
-                JSONObject responseIDs = null;
+                JSONObject responseIDs;
                 try {
                     responseIDs = response.getJSONObject(i);
                     groupIDs.add(responseIDs.getString("groupID"));
-                }
-                catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -108,18 +101,55 @@ public class GroupCreateActivity extends AppCompatActivity {
         requestQueue.add(groupIDsRequest);
     }
 
-    public void makeGroup(){
+    public void makeGroup() {
         JsonArrayRequest newGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/add_group/" + newGroupID + "/" + groupNameInput.getText().toString() + "/" + groupDescriptionInput.getText().toString(), null, response -> addUserToGroup(), error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(newGroupRequest);
     }
 
-    public void addUserToGroup(){
-        JsonArrayRequest addUserToGroupRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + newGroupID + "/" + user.getId(), null, response -> {
-            Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-        }, error -> Toast.makeText(GroupCreateActivity.this, "The group was made but you were unable to be added", Toast.LENGTH_LONG).show());
-        requestQueue.add( addUserToGroupRequest);
+    public void addUserToGroup() {
+        JsonArrayRequest addUserToGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/link_group_to_user/" + newGroupID + "/" + user.getId(), null, response -> getAllGroups(), error -> Toast.makeText(GroupCreateActivity.this, "The group was made but you were unable to be added", Toast.LENGTH_LONG).show());
+        requestQueue.add(addUserToGroupRequest);
+    }
+
+    public void getAllGroups() {
+        JsonArrayRequest groupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_groups_from_user/" + user.getId(), null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject responseGroups;
+                try {
+                    responseGroups = response.getJSONObject(i);
+                    getGroupInfo(responseGroups.getString("groupID"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, error -> {
+        });
+        requestQueue.add(groupRequest);
+    }
+
+    public void getGroupInfo(String groupID) {
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + groupID, null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject groupInfos;
+                try {
+                    groupInfos = response.getJSONObject(i);
+                    user.addGroupToBundle(new Group(groupID, groupInfos.getString("name"), groupInfos.getString("description")));
+                    Log.d("demo", user.getGroupsBundle().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            goToGroupActivity();
+        }, error -> {
+        });
+        requestQueue.add(groupInfoRequest);
+    }
+
+    public void goToGroupActivity() {
+        Intent intent = new Intent(GroupCreateActivity.this, GroupActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 }
+

@@ -40,11 +40,13 @@ public class MapActivity extends AppCompatActivity{
     private ImageView cancel_btn;
     private ImageView changeLocation_card;
     private TextView changeLocation;
+    private String groupId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         User user = getIntent().getExtras().getParcelable("user");
+        groupId = getIntent().getExtras().getString("groupId");
 
         //handle permissions first, before map is created. not depicted here
 

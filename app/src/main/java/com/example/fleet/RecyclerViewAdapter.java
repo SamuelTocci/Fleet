@@ -34,11 +34,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private RequestQueue requestQueue;
     private final ArrayList<String> groupNameList;
     private final ArrayList<String> groupDescriptionList;
+    private final ArrayList<String> groupIdList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList, User user){ //[[1,2,3],[5,1,8]]
+    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList,ArrayList<String> groupIdList, User user){ //[[1,2,3],[5,1,8]]
         this.context = context;
         this.groupNameList = groupNameList;
         this.groupDescriptionList = groupDescriptionList;
+        this.groupIdList = groupIdList;
         this.user = user;
     }
 
@@ -62,6 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Activity activity = (Activity) context;
                 Intent intent = new Intent(context, MapActivity.class);
                 intent.putExtra("user", user);
+                intent.putExtra("groupId", groupIdList.get(position));
                 context.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
             }

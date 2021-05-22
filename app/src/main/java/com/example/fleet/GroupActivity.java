@@ -39,6 +39,7 @@ public class GroupActivity extends AppCompatActivity {
     private User user;
     private ArrayList<String> groupNameList = new ArrayList<>();
     private ArrayList<String> groupDescriptionList = new ArrayList<>();
+    private ArrayList<String> groupIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,6 +149,7 @@ public class GroupActivity extends AppCompatActivity {
             Group group = groupBundle.getParcelable(key);
             groupNameList.add(group.getName().toString());
             groupDescriptionList.add(group.getDescription().toString());
+            groupIdList.add(group.getId().toString());
         }
 
 //        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
@@ -157,7 +159,7 @@ public class GroupActivity extends AppCompatActivity {
 //            groupDescriptionList.add(group.getDescription());
 //        }
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList,groupDescriptionList, user);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

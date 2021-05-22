@@ -37,7 +37,8 @@ public class GroupActivity extends AppCompatActivity {
     private ImageView settings;
     private RequestQueue requestQueue;
     private User user;
-    private ArrayList<String> groupNameList,groupDescriptionList = new ArrayList<>();
+    private ArrayList<String> groupNameList = new ArrayList<>();
+    private ArrayList<String> groupDescriptionList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,13 +142,13 @@ public class GroupActivity extends AppCompatActivity {
         });
 
 
-//        Log.d("demo", groupBundle.toString());
+        Log.d("demo", groupBundle.keySet().toString());
 //
-//        for (String key : groupBundle.keySet()){
-//            Group group = groupBundle.getParcelable(key);
-//            groupNameList.add(group.getName());
-//            groupDescriptionList.add(group.getDescription());
-//        }
+        for (String key : groupBundle.keySet()){
+            Group group = groupBundle.getParcelable(key);
+            groupNameList.add(group.getName().toString());
+            groupDescriptionList.add(group.getDescription().toString());
+        }
 
 //        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
 //            String key = it.next();

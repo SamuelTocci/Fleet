@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Activity activity;
     User user;
     private RequestQueue requestQueue;
-    private ArrayList<String> groupNameList,groupDescriptionList = new ArrayList<>();
+    private final ArrayList<String> groupNameList;
+    private final ArrayList<String> groupDescriptionList;
 
     public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList, User user){ //[[1,2,3],[5,1,8]]
         this.context = context;
@@ -68,13 +70,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        if(data1 == null){return 0;}
-        return data1.length;
+        if(groupNameList == null){return 0;}
+        return groupNameList.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
-        TextView description,groupName;
+        TextView description;
+        TextView groupName;
         ImageView picture;
         ConstraintLayout recycler_row;
 
@@ -82,7 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             description = itemView.findViewById(R.id.group_description);
             groupName = itemView.findViewById(R.id.group_name);
-            picture = itemView.findViewById(R.id.profile_pic);
+//            picture = itemView.findViewById(R.id.profile_pic);
             recycler_row = itemView.findViewById(R.id.recycler_row);
         }
     }

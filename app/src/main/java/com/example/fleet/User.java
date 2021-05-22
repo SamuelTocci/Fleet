@@ -30,7 +30,7 @@ public class User implements Parcelable {
         first_name = in.readString();
         last_name = in.readString();
         nick_name = in.readString();
-        groupList = in.readBundle();//TODO checken of classloader nodig is
+        groupList = in.readBundle(getClass().getClassLoader());//TODO checken of classloader nodig is
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

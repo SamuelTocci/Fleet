@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,13 +24,12 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class QRactivity extends AppCompatActivity {
     private ImageView cancelbtn;
     private CodeScanner mCodeScanner;
-    private ImageView qrStart,manual_qr,qr_logo;
+    private ImageView qrStart,manual_qr,qr_logo, join_group_btn;
+    private TextView manual_id;
     private RequestQueue requestQueue;
     private User user;
 
@@ -53,7 +54,9 @@ public class QRactivity extends AppCompatActivity {
         scannerView.setVisibility(View.GONE);
 
         manual_qr = findViewById(R.id.manual_input);
+        manual_id = findViewById(R.id.insert_group_id);
         qr_logo = findViewById(R.id.qr_logo);
+        join_group_btn = findViewById(R.id.join_group);
 
         qrStart = findViewById(R.id.qr_start);
         qrStart.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +66,15 @@ public class QRactivity extends AppCompatActivity {
                 qrStart.setVisibility(View.GONE);
                 qr_logo.setVisibility(View.GONE);
                 manual_qr.setVisibility(View.GONE);
+                manual_id.setVisibility(View.GONE);
+                join_group_btn.setVisibility(View.GONE);
+            }
+        });
+
+        join_group_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinGroup(manual_id.getText().toString());
             }
         });
 
@@ -73,18 +85,7 @@ public class QRactivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + result +"/" + user.getId(), null, new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                goToGroupActivity();
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(QRactivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        requestQueue.add(groupInfoRequest);
+                        joinGroup(result.toString());
                     }
                 });
             }
@@ -106,6 +107,21 @@ public class QRactivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
+    }
+
+    public void joinGroup(String group_id){
+        JsonArrayRequest joinGroupRequest = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/link_group_to_user/" + group_id +"/" + user.getId(), null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                goToGroupActivity();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(QRactivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(joinGroupRequest);
     }
 
     public void goToGroupActivity() {

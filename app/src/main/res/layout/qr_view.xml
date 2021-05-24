@@ -28,42 +28,68 @@
             android:layout_marginTop="32dp"
             app:layout_constraintHorizontal_bias="0.492" />
 
-    <ImageView
-            android:layout_width="314dp"
-            android:layout_height="53dp"
-            app:srcCompat="@drawable/ic_typecode"
-            android:id="@+id/manual_input"
-            app:layout_constraintTop_toBottomOf="@+id/qr_start"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/qr_start"
-            app:layout_constraintEnd_toEndOf="@+id/qr_start" />
-
     <com.budiyev.android.codescanner.CodeScannerView
-            android:id="@+id/scanner_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:autoFocusButtonColor="@android:color/white"
-            app:autoFocusButtonVisible="false"
-            app:flashButtonColor="@android:color/white"
-            app:flashButtonVisible="false"
-            app:frameColor="@color/colorAccentYellow"
-            app:frameCornersSize="50dp"
-            app:frameCornersRadius="24dp"
-            app:frameAspectRatioWidth="1"
-            app:frameAspectRatioHeight="1"
-            app:frameSize="0.6"
-            app:frameThickness="3dp"
-            app:maskColor="@color/colorPrimary"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp" />
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonVisible="false"
+        app:flashButtonColor="@android:color/white"
+        app:flashButtonVisible="false"
+        app:frameAspectRatioHeight="1"
+        app:frameAspectRatioWidth="1"
+        app:frameColor="@color/colorAccentYellow"
+        app:frameCornersRadius="24dp"
+        app:frameCornersSize="50dp"
+        app:frameSize="0.6"
+        app:frameThickness="3dp"
+        app:maskColor="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+    </com.budiyev.android.codescanner.CodeScannerView>
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_cancel"
-            android:id="@+id/cancel"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="32dp" />
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_cancel" />
+
+    <ImageView
+        android:id="@+id/manual_input"
+        android:layout_width="314dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/qr_start"
+        app:layout_constraintStart_toStartOf="@+id/qr_start"
+        app:layout_constraintTop_toBottomOf="@+id/qr_start"
+        app:srcCompat="@drawable/ic_rounded_box" />
+
+    <ImageView
+        android:id="@+id/join_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/manual_input"
+        app:layout_constraintStart_toStartOf="@+id/manual_input"
+        app:layout_constraintTop_toBottomOf="@+id/insert_group_id"
+        app:srcCompat="@drawable/ic_add_button_light" />
+
+    <EditText
+        android:id="@+id/insert_group_id"
+        android:layout_width="184dp"
+        android:layout_height="52dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Group ID"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/manual_input"
+        app:layout_constraintEnd_toEndOf="@+id/manual_input"
+        app:layout_constraintStart_toStartOf="@+id/manual_input"
+        app:layout_constraintTop_toTopOf="@+id/manual_input" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,6 +107,15 @@
             android:layout_marginEnd="20dp" />
 
     <ImageView
+        android:id="@+id/qr_gen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/leave_group"
+        app:layout_constraintEnd_toEndOf="@+id/leave_group"
+        app:srcCompat="@drawable/ic_qr_scanner_dark" />
+
+    <ImageView
         android:id="@+id/leave_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

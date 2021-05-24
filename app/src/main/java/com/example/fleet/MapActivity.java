@@ -41,6 +41,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class MapActivity extends AppCompatActivity{
     private ImageView groups_button;
@@ -53,8 +54,8 @@ public class MapActivity extends AppCompatActivity{
     private ImageView cancel_btn;
     private ImageView changeLocation_card;
     private ImageView card;
-    private ImageView cancel_group_btn;
-    private ImageView exit_group_btn;
+    private ImageView cancel_group_btn, exit_group_btn;
+    private ImageView qr_btn;
     private TextView changeLocation;
     private Switch changeStatus;
     private RequestQueue requestQueue;
@@ -105,6 +106,7 @@ public class MapActivity extends AppCompatActivity{
         card = findViewById(R.id.groupleavecard);
         cancel_group_btn = findViewById(R.id.cancel_leave);
         exit_group_btn = findViewById(R.id.confirm_leave);
+        qr_btn = findViewById(R.id.qr_gen);
         rv_extended.setVisibility(View.GONE);
         rv_card_extended.setVisibility(View.GONE);
         cancel_btn.setVisibility(View.GONE);
@@ -112,6 +114,7 @@ public class MapActivity extends AppCompatActivity{
         card.setVisibility(View.GONE);
         cancel_group_btn.setVisibility(View.GONE);
         exit_group_btn.setVisibility(View.GONE);
+        qr_btn.setVisibility(View.GONE);
 
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +132,7 @@ public class MapActivity extends AppCompatActivity{
                 rv_extended.setVisibility(View.GONE);
                 cancel_btn.setVisibility(View.GONE);
                 leave_btn.setVisibility(View.GONE);
+                qr_btn.setVisibility(View.GONE);
 
                 changeLocation.setVisibility(View.VISIBLE);
                 changeLocation_card.setVisibility(View.VISIBLE);
@@ -144,17 +148,15 @@ public class MapActivity extends AppCompatActivity{
                 rv_extended.setVisibility(View.VISIBLE);
                 cancel_btn.setVisibility(View.VISIBLE);
                 leave_btn.setVisibility(View.VISIBLE);
-
-//                rv_card_small.clearAnimation();
-//                rv_small.clearAnimation();
-//                rv_card_small.startAnimation(animSlideDown);
-//                rv_small.startAnimation(animSlideDown);
+                qr_btn.setVisibility(View.VISIBLE);
 
                 animSlideUp.reset();
                 rv_card_extended.clearAnimation();
                 rv_extended.clearAnimation();
                 rv_card_extended.startAnimation(animSlideUp);
                 rv_extended.startAnimation(animSlideUp);
+
+
 
                 rv_card_small.setVisibility(View.GONE);
                 rv_small.setVisibility(View.GONE);
@@ -220,6 +222,15 @@ public class MapActivity extends AppCompatActivity{
 //                Intent intent = new Intent(MapActivity.this, LocationActivity.class);
 //                intent.putExtra("user", user);
 //                startActivity(intent);
+            }
+        });
+
+        qr_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, QRgeneratorActivity.class);
+                intent.putExtra("groupId", groupId);
+                startActivity(intent);
             }
         });
 

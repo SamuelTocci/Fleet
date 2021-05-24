@@ -52,10 +52,14 @@ public class MapActivity extends AppCompatActivity{
     private int[] images = {R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1,R.drawable.testperson1};
     private ImageView cancel_btn;
     private ImageView changeLocation_card;
+    private ImageView card;
+    private ImageView cancel_group_btn;
+    private ImageView exit_group_btn;
     private TextView changeLocation;
     private Switch changeStatus;
     private RequestQueue requestQueue;
     private String groupId;
+    private ImageView leave_btn;
     private int groupStatus;
 
     @Override
@@ -97,9 +101,17 @@ public class MapActivity extends AppCompatActivity{
         rv_extended = findViewById(R.id.rv_people_extended);
         rv_card_extended = findViewById(R.id.people_card_extended);
         cancel_btn = findViewById(R.id.cancel_btn);
+        leave_btn = findViewById(R.id.leave_group);
+        card = findViewById(R.id.groupleavecard);
+        cancel_group_btn = findViewById(R.id.cancel_leave);
+        exit_group_btn = findViewById(R.id.confirm_leave);
         rv_extended.setVisibility(View.GONE);
         rv_card_extended.setVisibility(View.GONE);
         cancel_btn.setVisibility(View.GONE);
+        leave_btn.setVisibility(View.GONE);
+        card.setVisibility(View.GONE);
+        cancel_group_btn.setVisibility(View.GONE);
+        exit_group_btn.setVisibility(View.GONE);
 
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,9 +128,11 @@ public class MapActivity extends AppCompatActivity{
                 rv_card_extended.setVisibility(View.GONE);
                 rv_extended.setVisibility(View.GONE);
                 cancel_btn.setVisibility(View.GONE);
+                leave_btn.setVisibility(View.GONE);
 
                 changeLocation.setVisibility(View.VISIBLE);
                 changeLocation_card.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -129,6 +143,7 @@ public class MapActivity extends AppCompatActivity{
                 rv_card_extended.setVisibility(View.VISIBLE);
                 rv_extended.setVisibility(View.VISIBLE);
                 cancel_btn.setVisibility(View.VISIBLE);
+                leave_btn.setVisibility(View.VISIBLE);
 
 //                rv_card_small.clearAnimation();
 //                rv_small.clearAnimation();
@@ -149,6 +164,41 @@ public class MapActivity extends AppCompatActivity{
             }
         });
 
+        leave_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                card.setVisibility(View.VISIBLE);
+                cancel_group_btn.setVisibility(View.VISIBLE);
+                exit_group_btn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        cancel_group_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                card.setVisibility(View.GONE);
+                cancel_group_btn.setVisibility(View.GONE);
+                exit_group_btn.setVisibility(View.GONE);
+            }
+        });
+
+        exit_group_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId(), null, response -> {
+                }, error -> {
+                });
+                requestQueue.add(leaveGroupRequest);
+
+                card.setVisibility(View.GONE);
+                cancel_group_btn.setVisibility(View.GONE);
+                exit_group_btn.setVisibility(View.GONE);
+
+                goToGroupActivity(user);
+            }
+        });
+
         PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images);
         rv_small.setAdapter(rva_small);
         rv_small.setLayoutManager(new GridLayoutManager(this,6));
@@ -160,10 +210,7 @@ public class MapActivity extends AppCompatActivity{
         groups_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, GroupActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
+                goToGroupActivity(user);
             }
         });
 
@@ -197,6 +244,13 @@ public class MapActivity extends AppCompatActivity{
                     requestQueue.add(statusChangeRequest);
                 }
         });
+    }
+
+    private void goToGroupActivity(User user) {
+        Intent intent = new Intent(MapActivity.this, GroupActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
     }
 
     private void mapStuff() {

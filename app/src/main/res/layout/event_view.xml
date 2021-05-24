@@ -55,6 +55,7 @@
         android:id="@+id/iv_changeLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:outlineAmbientShadowColor="#000000"
         android:outlineSpotShadowColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/status_switch"
@@ -106,6 +107,15 @@
             android:layout_marginEnd="20dp" />
 
     <ImageView
+        android:id="@+id/leave_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toEndOf="@+id/cancel_btn"
+        app:srcCompat="@drawable/ic_exitgroupbutton" />
+
+    <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_people_card"
@@ -113,6 +123,35 @@
             app:layout_constraintBottom_toBottomOf="@+id/openmapview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/groupleavecard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/openmapview"
+        app:srcCompat="@drawable/ic_groupleavecard" />
+
+    <ImageView
+        android:id="@+id/cancel_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/groupleavecard"
+        app:layout_constraintStart_toStartOf="@+id/groupleavecard"
+        app:srcCompat="@drawable/ic_cancelgroup_button" />
+
+    <ImageView
+        android:id="@+id/confirm_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cancel_leave"
+        app:layout_constraintEnd_toEndOf="@+id/groupleavecard"
+        app:srcCompat="@drawable/ic_exit_group_button" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"

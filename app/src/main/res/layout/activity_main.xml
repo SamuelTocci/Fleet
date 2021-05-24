@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         android:id="@+id/Layout1"
-        android:background="@drawable/gradient">
+        android:background="@drawable/pulse_list">
 
     <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"

@@ -41,17 +41,26 @@
             android:layout_marginEnd="20dp"
             app:shapeAppearance="@style/profilePictures" />
 
+    <Switch
+        android:id="@+id/status_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="Group Status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_search"
-            android:id="@+id/iv_changeLocation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="80dp"
-            android:outlineAmbientShadowColor="#000000"
-            android:outlineSpotShadowColor="#000000" />
+        android:id="@+id/iv_changeLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="#000000"
+        android:outlineSpotShadowColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/status_switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/status_switch"
+        app:srcCompat="@drawable/ic_search" />
 
     <TextView
             android:text="Change Location"
@@ -104,16 +113,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/openmapview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-    <Switch
-        android:id="@+id/status_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:text="Group Status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"

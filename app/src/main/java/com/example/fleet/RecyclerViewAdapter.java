@@ -34,13 +34,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final ArrayList<Integer> groupUserCountList = new ArrayList<>();
     private final ArrayList<Integer> groupStatusList = new ArrayList<>();
 
-    private final ArrayList<Group> groupList;
-
-    public RecyclerViewAdapter(Context context,ArrayList<Group> groupList, String search, User user){ //[[1,2,3],[5,1,8]]
+    public RecyclerViewAdapter(Context context,String search, User user){ //[[1,2,3],[5,1,8]]
         this.user = user;
         groupBundle = user.getGroupsBundle();
         this.context = context;
-        this.groupList = groupList;
 
         for (String key : groupBundle.keySet()){
             Group group = groupBundle.getParcelable(key);
@@ -112,7 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             groupName = itemView.findViewById(R.id.group_name);
             count = itemView.findViewById(R.id.people_count);
             active = itemView.findViewById(R.id.status);
-//            picture = itemView.findViewById(R.id.profile_pic);
+//          picture = itemView.findViewById(R.id.profile_pic);
             recycler_row = itemView.findViewById(R.id.recycler_row);
         }
     }

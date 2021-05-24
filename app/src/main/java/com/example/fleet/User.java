@@ -30,7 +30,7 @@ public class User implements Parcelable {
         first_name = in.readString();
         last_name = in.readString();
         nick_name = in.readString();
-        groupList = in.readBundle(getClass().getClassLoader());//TODO checken of classloader nodig is
+        groupList = in.readBundle(getClass().getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -95,7 +95,7 @@ public class User implements Parcelable {
     }
 
     //functions
-    public Bitmap getFacebookProfilePicture() throws IOException {
+    public Bitmap setFacebookProfilePicture() throws IOException {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

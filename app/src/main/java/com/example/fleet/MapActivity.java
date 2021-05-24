@@ -270,56 +270,11 @@ public class MapActivity extends AppCompatActivity{
         GeoPoint startPoint = new GeoPoint(50.880192,4.699782);
         mapController.setCenter(startPoint);
 
-        // dit werkt ni ma mss permissions vragen fzo
-        //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-        //        this.mLocationOverlay.enableMyLocation();
-        //        map.getOverlays().add(this.mLocationOverlay);
-
         Marker startMarker = new Marker(map);
         startMarker.setPosition(startPoint);
         startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         map.getOverlays().add(startMarker);
-//        JsonArrayRequest meetingLocation = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_group_meeting/" + groupId, null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                try {
-//                    JSONObject groupInfo = response.getJSONObject(1);
-//                    IMapController mapController = map.getController();
-//                    mapController.setZoom(20.0);
-//                    GeoPoint startPoint = new GeoPoint(groupInfo.getLong("x_meeting"), groupInfo.getLong("y_meeting"));
-//                    mapController.setCenter(startPoint);
-//
-//                    // dit werkt ni ma mss permissions vragen fzo
-//                    //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-//                    //        this.mLocationOverlay.enableMyLocation();
-//                    //        map.getOverlays().add(this.mLocationOverlay);
-//
-//                    Marker startMarker = new Marker(map);
-//                    startMarker.setPosition(startPoint);
-//                    startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
-//                    startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-//                    map.getOverlays().add(startMarker);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                IMapController mapController = map.getController();
-//                mapController.setZoom(20.0);
-//                GeoPoint startPoint = new GeoPoint(50, 60);
-//                mapController.setCenter(startPoint);
-//
-//                // dit werkt ni ma mss permissions vragen fzo
-//                //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-//                //        this.mLocationOverlay.enableMyLocation();
-//                //        map.getOverlays().add(this.mLocationOverlay);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//        requestQueue.add(meetingLocation);
     }
 
     public void onResume(){

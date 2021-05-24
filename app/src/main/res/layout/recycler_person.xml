@@ -24,14 +24,6 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_status_there"
-                android:id="@+id/iv_status_there"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_status_otw"
                 android:id="@+id/iv_status_otw"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -46,12 +38,20 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_status_coming"
-                android:id="@+id/iv_status_coming"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/iv_status_coming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_status_coming" />
+
+        <ImageView
+            android:id="@+id/iv_status_there"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_status_there" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

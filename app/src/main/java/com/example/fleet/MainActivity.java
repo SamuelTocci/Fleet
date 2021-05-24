@@ -28,6 +28,7 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -59,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         graphRequest();
 
         if (AccessToken.getCurrentAccessToken() != null && id != null) {
+            try {
+                user.setFacebookProfilePicture();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             goToGroupActivity();
         }
 

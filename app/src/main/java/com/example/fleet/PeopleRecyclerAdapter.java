@@ -34,6 +34,13 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.profilePic.setImageResource(images[position]);
+        holder.status_there.setVisibility(View.GONE);
+        holder.status_otw.setVisibility(View.GONE);
+        holder.status_coming.setVisibility(View.GONE);
+        holder.status_not.setVisibility(View.GONE);
+
+        //TODO if statements maken om status te displayen met status list
+
     }
 
     // total number of cells
@@ -46,10 +53,18 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView profilePic;
+        ImageView status_there;
+        ImageView status_otw;
+        ImageView status_coming;
+        ImageView status_not;
 
         ViewHolder(View itemView) {
             super(itemView);
             profilePic = itemView.findViewById(R.id.profile_pic);
+            status_there = itemView.findViewById(R.id.iv_status_there);
+            status_otw = itemView.findViewById(R.id.iv_status_otw);
+            status_coming = itemView.findViewById(R.id.iv_status_coming);
+            status_not = itemView.findViewById(R.id.iv_status_not);
             itemView.setOnClickListener(this);
         }
 

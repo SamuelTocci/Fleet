@@ -43,8 +43,6 @@ public class GroupActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private User user;
 
-    private ArrayList<Group> groupList;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +59,7 @@ public class GroupActivity extends AppCompatActivity {
         user = getIntent().getExtras().getParcelable("user");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        try {
-            Bitmap mBitmap = user.getFacebookProfilePicture();
-            userPicture.setImageBitmap(mBitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        userPicture.setImageBitmap(user.getPfPic());
 
         add_btn = findViewById(R.id.add_btn);
         settings = findViewById(R.id.settings);
@@ -198,9 +191,8 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void recycler(String search) {
-        groupList = new ArrayList<>();
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupList, search, user);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this,search, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -3,10 +3,12 @@ package com.example.fleet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,12 +33,9 @@ public class GroupActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Integer> GroupIdList = new ArrayList();
 
-    //TODO data van sql in datastructuur zetten
-//    private String[] s1 = {"test category"};
-//    private String[] s2 = {"group name"};
-//    private int[] images = {R.drawable.testperson1};
     private Bundle groupBundle;
 
+    private SearchView search_bar;
     private ImageView add_btn;
     private ImageView settings;
     private RequestQueue requestQueue;
@@ -64,6 +63,7 @@ public class GroupActivity extends AppCompatActivity {
 
         add_btn = findViewById(R.id.add_btn);
         settings = findViewById(R.id.settings);
+        search_bar = findViewById(R.id.search_bar);
 
         // dit kan mss makkelijker geschreven worden
         ImageView add_btn_card = findViewById(R.id.addbtn_card);
@@ -145,40 +145,60 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-//        for (Iterator<String> it = groupBundle.keySet().iterator(); it.hasNext(); ){
-//            String key = it.next();
-//            Group group = groupBundle.getParcelable(key);
-//            groupNameList.add(group.getName());
-//            groupDescriptionList.add(group.getDescription());
-//        }
+        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //    adapter.getFilter().filter(newText);
+                recycler(search_bar.getQuery().toString());
+                return false;
+            }
+        });
+
         informRecycler();
     }
 
-    private void informRecycler() {
-            user.resetBundle();
-            JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_info/" + user.getId(), null, response -> {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject groupInfo;
-                    try {
-                        groupInfo = response.getJSONObject(i);
-                        this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                groupBundle = user.getGroupsBundle();
-                recycler();
-            }, error -> {
-            });
-            requestQueue.add(groupInfoRequest);
-        }
 
-    private void recycler() {
+
+    private void informRecycler() {
+        user.resetBundle();
+        String url;
+        url = "https://studev.groept.be/api/a20sd108/get_all_group_info/" + user.getId();
+        Log.d("demo","request");
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
+
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject groupInfo;
+                try {
+                    groupInfo = response.getJSONObject(i);
+                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            groupBundle = user.getGroupsBundle();
+            recycler("");
+        }, error -> {
+        });
+        requestQueue.add(groupInfoRequest);
+    }
+
+    private void recycler(String search) {
+        groupNameList = new ArrayList<>();
+        groupDescriptionList = new ArrayList<>();
+        groupIdList = new ArrayList<>();
+
         for (String key : groupBundle.keySet()){
             Group group = groupBundle.getParcelable(key);
-            groupNameList.add(group.getName().toString());
-            groupDescriptionList.add(group.getDescription().toString());
-            groupIdList.add(group.getId().toString());
+            if (group.getName().contains(search)) {
+                groupNameList.add(group.getName().toString());
+                groupDescriptionList.add(group.getDescription().toString());
+                groupIdList.add(group.getId().toString());
+            }
         }
 
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, user);
@@ -187,4 +207,3 @@ public class GroupActivity extends AppCompatActivity {
     }
 
 }
-

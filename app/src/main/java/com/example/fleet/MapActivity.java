@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -40,6 +51,7 @@ public class MapActivity extends AppCompatActivity{
     private ImageView cancel_btn;
     private ImageView changeLocation_card;
     private TextView changeLocation;
+    private RequestQueue requestQueue;
     private String groupId;
 
     @Override
@@ -47,6 +59,8 @@ public class MapActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         User user = getIntent().getExtras().getParcelable("user");
         groupId = getIntent().getExtras().getString("groupId");
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
 
         //handle permissions first, before map is created. not depicted here
 
@@ -65,22 +79,7 @@ public class MapActivity extends AppCompatActivity{
         map = (MapView) findViewById(R.id.openmapview);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
-        IMapController mapController = map.getController();
-        mapController.setZoom(20.0);
-        GeoPoint startPoint = new GeoPoint(50.886874, 4.699761);
-        mapController.setCenter(startPoint);
-        // dit werkt ni ma mss permissions vragen fzo
-        //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-        //        this.mLocationOverlay.enableMyLocation();
-        //        map.getOverlays().add(this.mLocationOverlay);
-
-
-
-        Marker startMarker = new Marker(map);
-        startMarker.setPosition(startPoint);
-        startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        map.getOverlays().add(startMarker);
+        mapStuff();
 
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
@@ -162,7 +161,75 @@ public class MapActivity extends AppCompatActivity{
                 overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
             }
         });
+
+        changeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(MapActivity.this, LocationActivity.class);
+//                intent.putExtra("user", user);
+//                startActivity(intent);
+            }
+        });
     }
+
+    private void mapStuff() {
+        IMapController mapController = map.getController();
+        mapController.setZoom(20.0);
+        GeoPoint startPoint = new GeoPoint(50.880192,4.699782);
+        mapController.setCenter(startPoint);
+
+        // dit werkt ni ma mss permissions vragen fzo
+        //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        //        this.mLocationOverlay.enableMyLocation();
+        //        map.getOverlays().add(this.mLocationOverlay);
+
+        Marker startMarker = new Marker(map);
+        startMarker.setPosition(startPoint);
+        startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        map.getOverlays().add(startMarker);
+//        JsonArrayRequest meetingLocation = new JsonArrayRequest(Request.Method.GET,"https://studev.groept.be/api/a20sd108/get_group_meeting/" + groupId, null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                try {
+//                    JSONObject groupInfo = response.getJSONObject(1);
+//                    IMapController mapController = map.getController();
+//                    mapController.setZoom(20.0);
+//                    GeoPoint startPoint = new GeoPoint(groupInfo.getLong("x_meeting"), groupInfo.getLong("y_meeting"));
+//                    mapController.setCenter(startPoint);
+//
+//                    // dit werkt ni ma mss permissions vragen fzo
+//                    //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+//                    //        this.mLocationOverlay.enableMyLocation();
+//                    //        map.getOverlays().add(this.mLocationOverlay);
+//
+//                    Marker startMarker = new Marker(map);
+//                    startMarker.setPosition(startPoint);
+//                    startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
+//                    startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+//                    map.getOverlays().add(startMarker);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                IMapController mapController = map.getController();
+//                mapController.setZoom(20.0);
+//                GeoPoint startPoint = new GeoPoint(50, 60);
+//                mapController.setCenter(startPoint);
+//
+//                // dit werkt ni ma mss permissions vragen fzo
+//                //        this.mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+//                //        this.mLocationOverlay.enableMyLocation();
+//                //        map.getOverlays().add(this.mLocationOverlay);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        requestQueue.add(meetingLocation);
+    }
+
     public void onResume(){
         super.onResume();
         //this will refresh the osmdroid configuration on resuming.

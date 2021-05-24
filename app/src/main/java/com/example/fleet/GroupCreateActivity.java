@@ -35,7 +35,6 @@ public class GroupCreateActivity extends AppCompatActivity {
 
         user = getIntent().getExtras().getParcelable("user");
 
-
         groupNameInput = findViewById(R.id.groupNameInput);
         groupDescriptionInput = findViewById(R.id.groupDescriptionInput);
 
@@ -103,4 +102,3 @@ public class GroupCreateActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 }
-

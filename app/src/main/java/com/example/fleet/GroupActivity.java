@@ -40,11 +40,8 @@ public class GroupActivity extends AppCompatActivity {
     private ImageView settings;
     private RequestQueue requestQueue;
     private User user;
-    private ArrayList<String> groupNameList;
-    private ArrayList<String> groupDescriptionList;
-    private ArrayList<String> groupIdList;
-    private ArrayList<Integer> groupUserCountList;
-    private ArrayList<Integer> groupStatusList;
+
+    private ArrayList<Group> groupList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -193,27 +190,10 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void recycler(String search) {
-        groupNameList = new ArrayList<>();
-        groupDescriptionList = new ArrayList<>();
-        groupIdList = new ArrayList<>();
-        groupUserCountList = new ArrayList<>();
-        groupStatusList = new ArrayList<>();
+        groupList = new ArrayList<>();
 
-        for (String key : groupBundle.keySet()){
-            Group group = groupBundle.getParcelable(key);
-
-            if (group.getName().contains(search)) {
-                groupNameList.add(group.getName());
-                groupDescriptionList.add(group.getDescription());
-                groupIdList.add(group.getId());
-                groupUserCountList.add(group.getUserCount());
-                groupStatusList.add(group.isActive());
-            }
-        }
-
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, groupUserCountList, groupStatusList, user);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupList, search, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
 }

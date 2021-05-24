@@ -3,6 +3,7 @@ package com.example.fleet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,25 +21,38 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
+    private Bundle groupBundle;
+
     private int[] images;
     Context context;
     Activity activity;
     User user;
-    private RequestQueue requestQueue;
-    private final ArrayList<String> groupNameList;
-    private final ArrayList<String> groupDescriptionList;
-    private final ArrayList<String> groupIdList;
-    private final ArrayList<Integer> groupUserCountList;
-    private final ArrayList<Integer> groupStatusList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList,ArrayList<String> groupIdList, ArrayList<Integer> groupUserCountList, ArrayList<Integer> groupStatusList, User user){ //[[1,2,3],[5,1,8]]
-        this.context = context;
-        this.groupNameList = groupNameList;
-        this.groupDescriptionList = groupDescriptionList;
-        this.groupIdList = groupIdList;
-        this.groupUserCountList = groupUserCountList;
-        this.groupStatusList = groupStatusList;
+    private final ArrayList<String> groupNameList = new ArrayList<>();
+    private final ArrayList<String> groupDescriptionList = new ArrayList<>();
+    private final ArrayList<String> groupIdList = new ArrayList<>();
+    private final ArrayList<Integer> groupUserCountList = new ArrayList<>();
+    private final ArrayList<Integer> groupStatusList = new ArrayList<>();
+
+    private final ArrayList<Group> groupList;
+
+    public RecyclerViewAdapter(Context context,ArrayList<Group> groupList, String search, User user){ //[[1,2,3],[5,1,8]]
         this.user = user;
+        groupBundle = user.getGroupsBundle();
+        this.context = context;
+        this.groupList = groupList;
+
+        for (String key : groupBundle.keySet()){
+            Group group = groupBundle.getParcelable(key);
+
+            if (group.getName().contains(search)) {
+                this.groupNameList.add(group.getName());
+                this.groupDescriptionList.add(group.getDescription());
+                this.groupIdList.add(group.getId());
+                this.groupUserCountList.add(group.getUserCount());
+                this.groupStatusList.add(group.isActive());
+            }
+        }
     }
 
     @NonNull
@@ -54,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(groupDescriptionList.get(position));
         holder.groupName.setText(groupNameList.get(position));
         holder.count.setText(String.valueOf(groupUserCountList.get(position)));
-        Log.d("demo", String.valueOf(groupStatusList.get(position)));
+
         if (groupStatusList.get(position) == 1){
             holder.active.setVisibility(View.VISIBLE);
         }

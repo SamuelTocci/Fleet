@@ -11,18 +11,23 @@ public class Group implements Parcelable {
     private String id;
     private String name;
     private String description;
+    private int userCount;
+    private int active;
     private ArrayList<String> users = new ArrayList<>();
 
-    public Group(String id, String name, String description){
+    public Group(String id, String name, String description, int userCount){
         this.id = id;
         this.name = name;
         this.description = description;
+        this.userCount = userCount;
+        active = 0;
     }
 
     protected Group(Parcel in) {
         description = in.readString();
         id = in.readString();
         name = in.readString();
+        userCount = in.readInt();
         users = in.readArrayList(null);
     }
 
@@ -50,6 +55,10 @@ public class Group implements Parcelable {
         return name;
     }
 
+    public int getUserCount() {
+        return userCount;
+    }
+
     public ArrayList<String> getUsers() {
         return users;
     }
@@ -62,8 +71,12 @@ public class Group implements Parcelable {
         this.name = name;
     }
 
-    public void setUsers(String userid) {
-        this.users.add(userid.toString());
+    public int isActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
     }
 
     @Override
@@ -76,6 +89,9 @@ public class Group implements Parcelable {
         dest.writeString(description);
         dest.writeString(id);
         dest.writeString(name);
+        dest.writeInt(userCount);
+        dest.writeInt(active);
         dest.writeList(users);
     }
+
 }

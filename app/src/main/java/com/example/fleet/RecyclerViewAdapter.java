@@ -3,7 +3,6 @@ package com.example.fleet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
-    String[] data1;
-    String[] data2;
     private int[] images;
     Context context;
     Activity activity;
@@ -35,12 +28,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final ArrayList<String> groupNameList;
     private final ArrayList<String> groupDescriptionList;
     private final ArrayList<String> groupIdList;
+    private final ArrayList<Integer> groupUserCountList;
+    private final ArrayList<Integer> groupStatusList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList,ArrayList<String> groupIdList, User user){ //[[1,2,3],[5,1,8]]
+    public RecyclerViewAdapter(Context context, ArrayList<String> groupNameList,ArrayList<String> groupDescriptionList,ArrayList<String> groupIdList, ArrayList<Integer> groupUserCountList, ArrayList<Integer> groupStatusList, User user){ //[[1,2,3],[5,1,8]]
         this.context = context;
         this.groupNameList = groupNameList;
         this.groupDescriptionList = groupDescriptionList;
         this.groupIdList = groupIdList;
+        this.groupUserCountList = groupUserCountList;
+        this.groupStatusList = groupStatusList;
         this.user = user;
     }
 
@@ -56,6 +53,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         holder.description.setText(groupDescriptionList.get(position));
         holder.groupName.setText(groupNameList.get(position));
+        holder.count.setText(String.valueOf(groupUserCountList.get(position)));
+        Log.d("demo", String.valueOf(groupStatusList.get(position)));
+        if (groupStatusList.get(position) == 1){
+            holder.active.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.active.setVisibility(View.GONE);
+        }
 //        holder.picture.setImageResource(images[position]);
 
         holder.recycler_row.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(context, MapActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("groupId", groupIdList.get(position));
+                intent.putExtra("groupStatus",groupStatusList.get(position));
                 context.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
             }
@@ -81,6 +87,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView description;
         TextView groupName;
+        TextView count;
+        ImageView active;
         ImageView picture;
         ConstraintLayout recycler_row;
 
@@ -88,6 +96,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             description = itemView.findViewById(R.id.group_description);
             groupName = itemView.findViewById(R.id.group_name);
+            count = itemView.findViewById(R.id.people_count);
+            active = itemView.findViewById(R.id.status);
 //            picture = itemView.findViewById(R.id.profile_pic);
             recycler_row = itemView.findViewById(R.id.recycler_row);
         }

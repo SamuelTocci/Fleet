@@ -40,9 +40,11 @@ public class GroupActivity extends AppCompatActivity {
     private ImageView settings;
     private RequestQueue requestQueue;
     private User user;
-    private ArrayList<String> groupNameList = new ArrayList<>();
-    private ArrayList<String> groupDescriptionList = new ArrayList<>();
-    private ArrayList<String> groupIdList = new ArrayList<>();
+    private ArrayList<String> groupNameList;
+    private ArrayList<String> groupDescriptionList;
+    private ArrayList<String> groupIdList;
+    private ArrayList<Integer> groupUserCountList;
+    private ArrayList<Integer> groupStatusList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -166,16 +168,19 @@ public class GroupActivity extends AppCompatActivity {
 
     private void informRecycler() {
         user.resetBundle();
-        String url;
-        url = "https://studev.groept.be/api/a20sd108/get_all_group_info/" + user.getId();
-        Log.d("demo","request");
-        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
-
+        JsonArrayRequest groupInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_group_info/" + user.getId(), null, response -> {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject groupInfo;
                 try {
                     groupInfo = response.getJSONObject(i);
-                    this.user.addGroupToBundle(new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description")));
+                    Group group = new Group(groupInfo.getString("groupID"), groupInfo.getString("name"), groupInfo.getString("description"), groupInfo.getInt("userCount"));
+                    if(groupInfo.getInt("status") == 1){
+                        group.setActive(1);
+                    }
+                    else{
+                        group.setActive(0);
+                    }
+                    this.user.addGroupToBundle(group);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -191,17 +196,22 @@ public class GroupActivity extends AppCompatActivity {
         groupNameList = new ArrayList<>();
         groupDescriptionList = new ArrayList<>();
         groupIdList = new ArrayList<>();
+        groupUserCountList = new ArrayList<>();
+        groupStatusList = new ArrayList<>();
 
         for (String key : groupBundle.keySet()){
             Group group = groupBundle.getParcelable(key);
+
             if (group.getName().contains(search)) {
-                groupNameList.add(group.getName().toString());
-                groupDescriptionList.add(group.getDescription().toString());
-                groupIdList.add(group.getId().toString());
+                groupNameList.add(group.getName());
+                groupDescriptionList.add(group.getDescription());
+                groupIdList.add(group.getId());
+                groupUserCountList.add(group.getUserCount());
+                groupStatusList.add(group.isActive());
             }
         }
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, user);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, groupNameList, groupDescriptionList, groupIdList, groupUserCountList, groupStatusList, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

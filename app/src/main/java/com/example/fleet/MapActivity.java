@@ -8,7 +8,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,14 +53,17 @@ public class MapActivity extends AppCompatActivity{
     private ImageView cancel_btn;
     private ImageView changeLocation_card;
     private TextView changeLocation;
+    private Switch changeStatus;
     private RequestQueue requestQueue;
     private String groupId;
+    private int groupStatus;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         User user = getIntent().getExtras().getParcelable("user");
         groupId = getIntent().getExtras().getString("groupId");
+        groupStatus = getIntent().getExtras().getInt("groupStatus");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
 
@@ -169,6 +174,28 @@ public class MapActivity extends AppCompatActivity{
 //                intent.putExtra("user", user);
 //                startActivity(intent);
             }
+        });
+
+        Switch onOffSwitch = (Switch)  findViewById(R.id.status_switch);
+        boolean state;
+        if (groupStatus == 1) { state = true; } else{ state = false;}
+        onOffSwitch.setChecked(state);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int state;
+                if(isChecked){
+                    state = 1;
+                }
+                else{
+                    state = 0;
+                }
+                    JsonArrayRequest statusChangeRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_group_status/" + String.valueOf(state) + "/" + groupId, null, response -> {
+                    }, error -> {
+                    });
+                    requestQueue.add(statusChangeRequest);
+                }
         });
     }
 

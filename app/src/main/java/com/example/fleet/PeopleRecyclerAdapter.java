@@ -2,6 +2,7 @@ package com.example.fleet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,13 +19,19 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
     private int[] images;
     private Context context;
     private ArrayList<String> userIds, userStatuses;
+    private User user;
+    private String groupId;
+    private int groupStatus;
 
     // data is passed into the constructor
-    PeopleRecyclerAdapter(Context context, int[] images, ArrayList<String> userIds, ArrayList<String> userStatuses) {
+    PeopleRecyclerAdapter(Context context, int[] images, ArrayList<String> userIds, ArrayList<String> userStatuses, User user, String groupId, int groupStatus) {
         this.images = images;
         this.context = context;
         this.userIds = userIds;
         this.userStatuses = userStatuses;
+        this.user = user;
+        this.groupId = groupId;
+        this.groupStatus = groupStatus;
     }
 
     // inflates the cell layout from xml when needed
@@ -44,8 +52,31 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
         holder.status_coming.setVisibility(View.GONE);
         holder.status_not.setVisibility(View.GONE);
 
-        //TODO if statements maken om status te displayen met status list
+        switch(userStatuses.get(position)){
+            case "present":
+                holder.status_there.setVisibility(View.VISIBLE);
+            case "omw":
+                holder.status_otw.setVisibility(View.VISIBLE);
+            case "coming":
+                holder.status_coming.setVisibility(View.VISIBLE);
+            case "not coming":
+                holder.status_not.setVisibility(View.VISIBLE);
+        }
 
+        holder.recycler_person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = (Activity) context;
+                Intent intent = new Intent(context, MapActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupStatus",groupStatus);
+                intent.putExtra("ShowStatusSwitch",true);
+                intent.putExtra("switchStatusForThisId", userIds.get(position));
+                context.startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
+            }
+        });
     }
 
     // total number of cells
@@ -56,12 +87,13 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView profilePic;
         ImageView status_there;
         ImageView status_otw;
         ImageView status_coming;
         ImageView status_not;
+        ConstraintLayout recycler_person;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -70,12 +102,9 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
             status_otw = itemView.findViewById(R.id.iv_status_otw);
             status_coming = itemView.findViewById(R.id.iv_status_coming);
             status_not = itemView.findViewById(R.id.iv_status_not);
-            itemView.setOnClickListener(this);
+            recycler_person = itemView.findViewById(R.id.recycler_person);
         }
 
-        @Override
-        public void onClick(View v) {
-        }
     }
 
     // convenience method for getting data at click position

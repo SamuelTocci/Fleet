@@ -82,6 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("user", user);
                 intent.putExtra("groupId", groupIdList.get(position));
                 intent.putExtra("groupStatus",groupStatusList.get(position));
+                intent.putExtra("ShowStatusSwitch",false);
                 context.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
             }

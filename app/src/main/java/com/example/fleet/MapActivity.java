@@ -65,14 +65,19 @@ public class MapActivity extends AppCompatActivity{
     private int groupStatus;
     private ArrayList<String> userIds;
     private ArrayList<String> userStatuses;
+    private User user;
+
+    private ImageView status_switch_prompt, present_btn, otw_btn, coming_btn,not_btn, reset_status_btn, cancel_status_btn;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        User user = getIntent().getExtras().getParcelable("user");
+        user = getIntent().getExtras().getParcelable("user");
         groupId = getIntent().getExtras().getString("groupId");
         groupStatus = getIntent().getExtras().getInt("groupStatus");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        Boolean promptStatusSwitch = getIntent().getExtras().getBoolean("ShowStatusSwitch");
 
         fillUserStatuses();
 
@@ -119,6 +124,62 @@ public class MapActivity extends AppCompatActivity{
         cancel_group_btn.setVisibility(View.GONE);
         exit_group_btn.setVisibility(View.GONE);
         qr_btn.setVisibility(View.GONE);
+
+        status_switch_prompt = findViewById(R.id.status_switch_prompt);
+        present_btn = findViewById(R.id.present_btn);
+        otw_btn = findViewById(R.id.otw_btn);
+        coming_btn = findViewById(R.id.coming_btn);
+        not_btn = findViewById(R.id.not_btn);
+        reset_status_btn = findViewById(R.id.reset_status_btn);
+        cancel_status_btn = findViewById(R.id.cancel_status_btn);
+
+        status_switch_prompt.setVisibility(View.GONE);
+        present_btn.setVisibility(View.GONE);
+        otw_btn.setVisibility(View.GONE);
+        coming_btn.setVisibility(View.GONE);
+        not_btn.setVisibility(View.GONE);
+        reset_status_btn.setVisibility(View.GONE);
+        cancel_status_btn.setVisibility(View.GONE);
+
+        if(promptStatusSwitch){
+            status_switch_prompt.setVisibility(View.VISIBLE);
+            present_btn.setVisibility(View.VISIBLE);
+            otw_btn.setVisibility(View.VISIBLE);
+            coming_btn.setVisibility(View.VISIBLE);
+            not_btn.setVisibility(View.VISIBLE);
+            reset_status_btn.setVisibility(View.VISIBLE);
+            cancel_status_btn.setVisibility(View.VISIBLE);
+            String userToSwitch = getIntent().getExtras().getString("groupId");
+        }
+
+        cancel_status_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status_switch_prompt.setVisibility(View.GONE);
+                present_btn.setVisibility(View.GONE);
+                otw_btn.setVisibility(View.GONE);
+                coming_btn.setVisibility(View.GONE);
+                not_btn.setVisibility(View.GONE);
+                reset_status_btn.setVisibility(View.GONE);
+                cancel_status_btn.setVisibility(View.GONE);
+            }
+        });
+
+        reset_status_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status_switch_prompt.setVisibility(View.GONE);
+                present_btn.setVisibility(View.GONE);
+                otw_btn.setVisibility(View.GONE);
+                coming_btn.setVisibility(View.GONE);
+                not_btn.setVisibility(View.GONE);
+                reset_status_btn.setVisibility(View.GONE);
+                cancel_status_btn.setVisibility(View.GONE);
+
+                //userToSwitch krijgt ge mee in de intent
+                //TODO status terug op NA zetten van de user id meegegeven in de intent
+            }
+        });
 
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,10 +374,10 @@ public class MapActivity extends AppCompatActivity{
     }
 
     private void peopleRecycler() {
-        PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images, userIds, userStatuses);
+        PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images, userIds, userStatuses,user,groupId,groupStatus);
         rv_small.setAdapter(rva_small);
         rv_small.setLayoutManager(new GridLayoutManager(this,6));
-        PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images, userIds, userStatuses);
+        PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images, userIds, userStatuses,user,groupId,groupStatus);
         rv_extended.setAdapter(rva_extended);
         rv_extended.setLayoutManager(new GridLayoutManager(this,6));
     }

@@ -197,7 +197,7 @@
         app:srcCompat="@drawable/ic_present_button" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/otw_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -207,23 +207,23 @@
         app:srcCompat="@drawable/ic_otw_button" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/coming_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="@+id/status_switch_prompt"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/otw_btn"
         app:srcCompat="@drawable/ic_coming_button" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/not_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="@+id/status_switch_prompt"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/coming_btn"
         app:srcCompat="@drawable/ic_not_coming_button" />
 
     <ImageView
@@ -231,19 +231,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+        app:layout_constraintBottom_toBottomOf="@+id/cancel_status_btn"
         app:layout_constraintStart_toStartOf="@+id/status_switch_prompt"
-        app:layout_constraintTop_toTopOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="@+id/cancel_status_btn"
         app:srcCompat="@drawable/ic_reset_status_button" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/cancel_status_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="@+id/status_switch_prompt"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/not_btn"
         app:srcCompat="@drawable/ic_cancel_button_prompt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

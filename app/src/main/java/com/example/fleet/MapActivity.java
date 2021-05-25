@@ -67,6 +67,7 @@ public class MapActivity extends AppCompatActivity{
     private ArrayList<String> userIds;
     private ArrayList<String> userStatuses;
     private User user;
+    private String userToSwitch;
 
     private ImageView status_switch_prompt, present_btn, otw_btn, coming_btn,not_btn, reset_status_btn, cancel_status_btn;
 
@@ -144,7 +145,7 @@ public class MapActivity extends AppCompatActivity{
             not_btn.setVisibility(View.VISIBLE);
             reset_status_btn.setVisibility(View.VISIBLE);
             cancel_status_btn.setVisibility(View.VISIBLE);
-            String userToSwitch = getIntent().getExtras().getString("groupId");
+            userToSwitch = getIntent().getExtras().getString("switchStatusForThisId");
         }
 
         cancel_status_btn.setOnClickListener(new View.OnClickListener() {
@@ -157,10 +158,8 @@ public class MapActivity extends AppCompatActivity{
         reset_status_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeStatus("NA");
                 hideStatusSwitchPrompt();
-
-                //userToSwitch krijgt ge mee in de intent
-                //TODO status terug op NA zetten van de user id meegegeven in de intent
             }
         });
 
@@ -193,6 +192,7 @@ public class MapActivity extends AppCompatActivity{
             public void onClick(View v) {
                 changeStatus("not coming");
                 hideStatusSwitchPrompt();
+
             }
         });
 
@@ -333,6 +333,7 @@ public class MapActivity extends AppCompatActivity{
                     state = 1;
                 }
                 else{
+                    changeAllStatuses("NA");
                     state = 0;
                 }
                     JsonArrayRequest statusChangeRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_group_status/" + String.valueOf(state) + "/" + groupId, null, response -> {
@@ -353,8 +354,17 @@ public class MapActivity extends AppCompatActivity{
         cancel_status_btn.setVisibility(View.GONE);
     }
 
+    private void changeAllStatuses(String status){
+            JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_all_status/" + status + "/" + groupId, null, response -> {
+                fillUserStatuses();
+                }, error -> {
+            });
+            requestQueue.add(changeStatusRequest);
+    }
+
     private void changeStatus(String status){
-        JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_status_in_group/" + status+ "/" + groupId + "/" + user.getId() , null, response -> {
+        JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_status_in_group/" + status+ "/" + groupId + "/" + userToSwitch, null, response -> {
+            fillUserStatuses();
         }, error -> {
         });
         requestQueue.add(changeStatusRequest);

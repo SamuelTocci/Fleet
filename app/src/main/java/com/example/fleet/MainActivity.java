@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        HttpHandler databaseReq = new HttpHandler();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         ConstraintLayout constraintLayout = findViewById(R.id.Layout1);
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                databaseReq.httpRequest("https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName, getApplicationContext());
-                Log.d("demo ", "login successful");
+                JsonArrayRequest addUserRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/add_user/" + id + "/" + firstName + "/" + lastName, null, response -> Log.d("demo ", "login successful"), error -> Toast.makeText(MainActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
+                requestQueue.add(addUserRequest);
             }
 
             @Override
@@ -92,33 +92,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        logo_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (AccessToken.getCurrentAccessToken() != null && id != null) {
-                    goToGroupActivity();
-                }
+        logo_btn.setOnClickListener(v -> {
+            if (AccessToken.getCurrentAccessToken() != null && id != null) {
+                goToGroupActivity();
             }
         });
     }
 
     public void graphRequest() {
-        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                try {
-                    id = object.getString("id");
-                    user.setId(id);
-                    firstName = object.getString("first_name");
-                    user.setFirst_name(firstName);
-                    lastName = object.getString("last_name");
-                    user.setLast_name(lastName);
-                    goToGroupActivity();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), (object, response) -> {
+            try {
+                id = object.getString("id");
+                user.setId(id);
+                firstName = object.getString("first_name");
+                user.setFirst_name(firstName);
+                lastName = object.getString("last_name");
+                user.setLast_name(lastName);
+                goToGroupActivity();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
+
         Bundle bundle = new Bundle();
         bundle.putString("fields", "name, id, first_name, last_name");
         graphRequest.setParameters(bundle);

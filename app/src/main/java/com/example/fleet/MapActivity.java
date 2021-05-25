@@ -97,7 +97,7 @@ public class MapActivity extends AppCompatActivity{
 
         setContentView(R.layout.event_view);
 
-        map = (MapView) findViewById(R.id.openmapview);
+        map = findViewById(R.id.openmapview);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
         mapStuff();
@@ -148,200 +148,151 @@ public class MapActivity extends AppCompatActivity{
             userToSwitch = getIntent().getExtras().getString("switchStatusForThisId");
         }
 
-        cancel_status_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideStatusSwitchPrompt();
-            }
+        cancel_status_btn.setOnClickListener(v -> hideStatusSwitchPrompt());
+
+        reset_status_btn.setOnClickListener(v -> {
+            changeStatus("NA");
+            hideStatusSwitchPrompt();
         });
 
-        reset_status_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStatus("NA");
-                hideStatusSwitchPrompt();
-            }
+        present_btn.setOnClickListener(v -> {
+            changeStatus("present");
+            hideStatusSwitchPrompt();
         });
 
-        present_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStatus("present");
-                hideStatusSwitchPrompt();
-            }
+        otw_btn.setOnClickListener(v -> {
+            changeStatus("omw");
+            hideStatusSwitchPrompt();
         });
 
-        otw_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStatus("omw");
-                hideStatusSwitchPrompt();
-            }
+        coming_btn.setOnClickListener(v -> {
+            changeStatus("coming");
+            hideStatusSwitchPrompt();
         });
 
-        coming_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStatus("coming");
-                hideStatusSwitchPrompt();
-            }
+        not_btn.setOnClickListener(v -> {
+            changeStatus("not coming");
+            hideStatusSwitchPrompt();
+
         });
 
-        not_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStatus("not coming");
-                hideStatusSwitchPrompt();
+        cancel_btn.setOnClickListener(v -> {
+            rv_card_small.setVisibility(View.VISIBLE);
+            rv_small.setVisibility(View.VISIBLE);
 
-            }
-        });
+            animSlideUp.reset();
+            rv_card_extended.clearAnimation();
+            rv_extended.clearAnimation();
+            rv_card_extended.startAnimation(animSlideDown);
+            rv_extended.startAnimation(animSlideDown);
 
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rv_card_small.setVisibility(View.VISIBLE);
-                rv_small.setVisibility(View.VISIBLE);
+            rv_card_extended.setVisibility(View.GONE);
+            rv_extended.setVisibility(View.GONE);
+            cancel_btn.setVisibility(View.GONE);
+            leave_btn.setVisibility(View.GONE);
+            qr_btn.setVisibility(View.GONE);
 
-                animSlideUp.reset();
-                rv_card_extended.clearAnimation();
-                rv_extended.clearAnimation();
-                rv_card_extended.startAnimation(animSlideDown);
-                rv_extended.startAnimation(animSlideDown);
+            changeLocation.setVisibility(View.VISIBLE);
+            changeLocation_card.setVisibility(View.VISIBLE);
 
-                rv_card_extended.setVisibility(View.GONE);
-                rv_extended.setVisibility(View.GONE);
-                cancel_btn.setVisibility(View.GONE);
-                leave_btn.setVisibility(View.GONE);
-                qr_btn.setVisibility(View.GONE);
-
-                changeLocation.setVisibility(View.VISIBLE);
-                changeLocation_card.setVisibility(View.VISIBLE);
-
-            }
         });
 
 
-        rv_card_small.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rv_card_extended.setVisibility(View.VISIBLE);
-                rv_extended.setVisibility(View.VISIBLE);
-                cancel_btn.setVisibility(View.VISIBLE);
-                leave_btn.setVisibility(View.VISIBLE);
-                qr_btn.setVisibility(View.VISIBLE);
+        rv_card_small.setOnClickListener(v -> {
+            rv_card_extended.setVisibility(View.VISIBLE);
+            rv_extended.setVisibility(View.VISIBLE);
+            cancel_btn.setVisibility(View.VISIBLE);
+            leave_btn.setVisibility(View.VISIBLE);
+            qr_btn.setVisibility(View.VISIBLE);
 
-                animSlideUp.reset();
-                rv_card_extended.clearAnimation();
-                rv_extended.clearAnimation();
-                rv_card_extended.startAnimation(animSlideUp);
-                rv_extended.startAnimation(animSlideUp);
+            animSlideUp.reset();
+            rv_card_extended.clearAnimation();
+            rv_extended.clearAnimation();
+            rv_card_extended.startAnimation(animSlideUp);
+            rv_extended.startAnimation(animSlideUp);
 
+            rv_card_small.setVisibility(View.GONE);
+            rv_small.setVisibility(View.GONE);
 
-
-                rv_card_small.setVisibility(View.GONE);
-                rv_small.setVisibility(View.GONE);
-
-                changeLocation.setVisibility(View.GONE);
-                changeLocation_card.setVisibility(View.GONE);
-            }
+            changeLocation.setVisibility(View.GONE);
+            changeLocation_card.setVisibility(View.GONE);
         });
 
-        leave_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                card.setVisibility(View.VISIBLE);
-                cancel_group_btn.setVisibility(View.VISIBLE);
-                exit_group_btn.setVisibility(View.VISIBLE);
-            }
+        leave_btn.setOnClickListener(v -> {
+            card.setVisibility(View.VISIBLE);
+            cancel_group_btn.setVisibility(View.VISIBLE);
+            exit_group_btn.setVisibility(View.VISIBLE);
         });
 
-        cancel_group_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                card.setVisibility(View.GONE);
-                cancel_group_btn.setVisibility(View.GONE);
-                exit_group_btn.setVisibility(View.GONE);
-            }
+        cancel_group_btn.setOnClickListener(v -> {
+            card.setVisibility(View.GONE);
+            cancel_group_btn.setVisibility(View.GONE);
+            exit_group_btn.setVisibility(View.GONE);
         });
 
-        exit_group_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        exit_group_btn.setOnClickListener(v -> {
 //
-                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId() + "/" + groupId, null, response -> {
-                        JSONObject usercount;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            usercount = response.getJSONObject(i);
-                            Log.d("demo", usercount.get("userCount").toString());
-                            if (true) {
-                                destroyGroup();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+            JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId() + "/" + groupId, null, response -> {
+//                    TODO fixen dat een groep leaven, de groep weg doet na de laatste persoon (best in database zelf)
+//                    JSONObject usercount;
+//                    for (int i = 0; i < response.length(); i++) {
+//                        try {
+//                            usercount = response.getJSONObject(i);
+//                            if (true) {
+//                                destroyGroup();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
-                }, error -> {
-                });
-                requestQueue.add(leaveGroupRequest);
+            }, error -> {
+                Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
+            });
+            requestQueue.add(leaveGroupRequest);
 
-                card.setVisibility(View.GONE);
-                cancel_group_btn.setVisibility(View.GONE);
-                exit_group_btn.setVisibility(View.GONE);
+            card.setVisibility(View.GONE);
+            cancel_group_btn.setVisibility(View.GONE);
+            exit_group_btn.setVisibility(View.GONE);
 
-                goToGroupActivity(user);
-            }
+            goToGroupActivity(user);
         });
 
         groups_button = findViewById(R.id.groups);
-        groups_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToGroupActivity(user);
-            }
-        });
+        groups_button.setOnClickListener(v -> goToGroupActivity(user));
 
-        changeLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        changeLocation.setOnClickListener(v -> {
+            //TODO locaties fixen
 //                Intent intent = new Intent(MapActivity.this, LocationActivity.class);
 //                intent.putExtra("user", user);
 //                startActivity(intent);
-            }
         });
 
-        qr_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, QRgeneratorActivity.class);
-                intent.putExtra("groupId", groupId);
-                startActivity(intent);
-            }
+        qr_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(MapActivity.this, QRgeneratorActivity.class);
+            intent.putExtra("groupId", MapActivity.this.groupId);
+            startActivity(intent);
         });
 
-        Switch onOffSwitch = (Switch)  findViewById(R.id.status_switch);
+        Switch onOffSwitch = findViewById(R.id.status_switch);
         boolean state;
-        if (groupStatus == 1) { state = true; } else{ state = false;}
+        state = groupStatus == 1;
         onOffSwitch.setChecked(state);
-        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int state;
-                if(isChecked){
-                    state = 1;
-                }
-                else{
-                    changeAllStatuses("NA");
-                    state = 0;
-                }
-                    JsonArrayRequest statusChangeRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_group_status/" + String.valueOf(state) + "/" + groupId, null, response -> {
-                    }, error -> {
-                    });
-                    requestQueue.add(statusChangeRequest);
-                }
-        });
+        onOffSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int state1;
+            if(isChecked){
+                state1 = 1;
+            }
+            else{
+                changeAllStatuses("NA");
+                state1 = 0;
+            }
+                JsonArrayRequest statusChangeRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_group_status/" + String.valueOf(state1) + "/" + groupId, null, response -> {
+                }, error -> {
+                    Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
+                });
+                requestQueue.add(statusChangeRequest);
+            });
     }
 
     private void hideStatusSwitchPrompt() {
@@ -355,27 +306,13 @@ public class MapActivity extends AppCompatActivity{
     }
 
     private void changeAllStatuses(String status){
-            JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_all_status/" + status + "/" + groupId, null, response -> {
-                fillUserStatuses();
-                }, error -> {
-            });
+            JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_all_status/" + status + "/" + groupId, null, response -> fillUserStatuses(), error -> Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
             requestQueue.add(changeStatusRequest);
     }
 
     private void changeStatus(String status){
-        JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_status_in_group/" + status+ "/" + groupId + "/" + userToSwitch, null, response -> {
-            fillUserStatuses();
-        }, error -> {
-        });
+        JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_status_in_group/" + status+ "/" + groupId + "/" + userToSwitch, null, response -> fillUserStatuses(), error -> Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(changeStatusRequest);
-    }
-
-    public void destroyGroup(){
-        JsonArrayRequest destroyGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/destroy_group/" + groupId, null, response -> {
-            Log.d("demo", "destroyed" + groupId);
-        }, error -> {
-        });
-        requestQueue.add(destroyGroupRequest);;
     }
 
     private void goToGroupActivity(User user) {
@@ -431,8 +368,7 @@ public class MapActivity extends AppCompatActivity{
                 }
             }
             peopleRecycler();
-        }, error -> {
-        });
+        }, error -> Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(userStatusInfoRequest);
     }
 

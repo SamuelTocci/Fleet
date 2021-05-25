@@ -85,8 +85,7 @@ public class GroupCreateActivity extends AppCompatActivity {
                 }
             }
             generateNewID();
-        }, error -> {
-        });
+        }, error -> Toast.makeText(GroupCreateActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(groupIDsRequest);
     }
 

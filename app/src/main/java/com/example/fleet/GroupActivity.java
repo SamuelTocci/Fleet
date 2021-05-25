@@ -66,7 +66,6 @@ public class GroupActivity extends AppCompatActivity {
         settings = findViewById(R.id.settings);
         search_bar = findViewById(R.id.search_bar);
 
-        // dit kan mss makkelijker geschreven worden
         ImageView add_btn_card = findViewById(R.id.addbtn_card);
         ImageView cancel_button = findViewById(R.id.cancel_button);
         ImageView qr_button = findViewById(R.id.qr_button);
@@ -83,67 +82,49 @@ public class GroupActivity extends AppCompatActivity {
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    Arrays.stream(addCard)
-                            .forEach(e -> e.setVisibility(View.VISIBLE));
-                    animSlideUp.reset();
-                    Arrays.stream(addCard).forEach(e -> e.clearAnimation());
-                    Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideUp));
-                    add_btn.clearAnimation();
-                    add_btn.startAnimation(animSlideDown);
-                    add_btn.setVisibility(View.GONE);
-            }
-        });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupActivity.this, SettingsActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
-            }
-        });
-
-        cancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        add_btn.setOnClickListener(v -> {
                 Arrays.stream(addCard)
-                        .forEach(e -> e.setVisibility(View.GONE));
-                add_btn.setVisibility(View.VISIBLE);
+                        .forEach(e -> e.setVisibility(View.VISIBLE));
                 animSlideUp.reset();
-                Arrays.stream(addCard).forEach(e -> e.clearAnimation());
-                Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideDown));
+                Arrays.stream(addCard).forEach(View::clearAnimation);
+                Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideUp));
                 add_btn.clearAnimation();
-                add_btn.startAnimation(animSlideUp);
-
-            }
+                add_btn.startAnimation(animSlideDown);
+                add_btn.setVisibility(View.GONE);
         });
-        qr_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupActivity.this, QRactivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
-            }
-        });
-        group_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupActivity.this, GroupCreateActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
-            }
+        settings.setOnClickListener(v -> {
+            Intent intent = new Intent(GroupActivity.this, SettingsActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
         });
 
-        single_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO intent naar temp event creation
-            }
+        cancel_button.setOnClickListener(v -> {
+            Arrays.stream(addCard)
+                    .forEach(e -> e.setVisibility(View.GONE));
+            add_btn.setVisibility(View.VISIBLE);
+            animSlideUp.reset();
+            Arrays.stream(addCard).forEach(e -> e.clearAnimation());
+            Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideDown));
+            add_btn.clearAnimation();
+            add_btn.startAnimation(animSlideUp);
+
+        });
+        qr_button.setOnClickListener(v -> {
+            Intent intent = new Intent(GroupActivity.this, QRactivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
+        });
+        group_button.setOnClickListener(v -> {
+            Intent intent = new Intent(GroupActivity.this, GroupCreateActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
+        });
+
+        single_button.setOnClickListener(v -> {
+            //TODO intent naar temp event creation
         });
 
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -159,11 +140,8 @@ public class GroupActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         informRecycler();
     }
-
-
 
     private void informRecycler() {
         user.resetBundle();
@@ -186,14 +164,11 @@ public class GroupActivity extends AppCompatActivity {
             }
             groupBundle = user.getGroupsBundle();
             recycler("");
-        }, error -> {
-            Toast.makeText(GroupActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
-        });
+        }, error -> Toast.makeText(GroupActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
         requestQueue.add(groupInfoRequest);
     }
 
     private void recycler(String search) {
-
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this,search, user);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

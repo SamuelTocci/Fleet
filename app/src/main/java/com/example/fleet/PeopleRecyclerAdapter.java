@@ -11,14 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAdapter.ViewHolder> {
     private int[] images;
     private Context context;
+    private ArrayList<String> userIds, userStatuses;
 
     // data is passed into the constructor
-    PeopleRecyclerAdapter(Context context, int[] images) {
+    PeopleRecyclerAdapter(Context context, int[] images, ArrayList<String> userIds, ArrayList<String> userStatuses) {
         this.images = images;
         this.context = context;
+        this.userIds = userIds;
+        this.userStatuses = userStatuses;
     }
 
     // inflates the cell layout from xml when needed

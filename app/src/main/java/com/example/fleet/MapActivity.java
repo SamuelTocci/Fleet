@@ -40,6 +40,7 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -62,6 +63,8 @@ public class MapActivity extends AppCompatActivity{
     private String groupId;
     private ImageView leave_btn;
     private int groupStatus;
+    private ArrayList<String> userIds;
+    private ArrayList<String> userStatuses;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class MapActivity extends AppCompatActivity{
         groupStatus = getIntent().getExtras().getInt("groupStatus");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
+        fillUserStatuses();
 
         //handle permissions first, before map is created. not depicted here
 
@@ -201,12 +205,7 @@ public class MapActivity extends AppCompatActivity{
             }
         });
 
-        PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images);
-        rv_small.setAdapter(rva_small);
-        rv_small.setLayoutManager(new GridLayoutManager(this,6));
-        PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images);
-        rv_extended.setAdapter(rva_extended);
-        rv_extended.setLayoutManager(new GridLayoutManager(this,6));
+        fillUserStatuses();
 
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {
@@ -293,5 +292,32 @@ public class MapActivity extends AppCompatActivity{
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+    }
+
+    public void fillUserStatuses() {
+        JsonArrayRequest userStatusInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_users_from_group/" + groupId, null, response -> {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject userInfo;
+                try {
+                    userInfo = response.getJSONObject(i);
+                    userIds.add(userInfo.getString("userID"));
+                    userStatuses.add(userInfo.getString("status"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            peopleRecycler();
+        }, error -> {
+        });
+        requestQueue.add(userStatusInfoRequest);
+    }
+
+    private void peopleRecycler() {
+        PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images, userIds, userStatuses);
+        rv_small.setAdapter(rva_small);
+        rv_small.setLayoutManager(new GridLayoutManager(this,6));
+        PeopleRecyclerAdapter rva_extended = new PeopleRecyclerAdapter(this, images, userIds, userStatuses);
+        rv_extended.setAdapter(rva_extended);
+        rv_extended.setLayoutManager(new GridLayoutManager(this,6));
     }
 }

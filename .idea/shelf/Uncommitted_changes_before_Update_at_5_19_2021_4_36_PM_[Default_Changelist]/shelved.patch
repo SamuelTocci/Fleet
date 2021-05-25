@@ -1,0 +1,76 @@
+Index: app/src/main/java/com/example/fleet/GroupActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fleet;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.view.animation.Animation;\r\nimport android.view.animation.AnimationUtils;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.facebook.appevents.suggestedevents.ViewOnClickListener;\r\nimport com.squareup.picasso.Picasso;\r\n\r\nimport java.io.IOException;\r\nimport java.lang.reflect.Array;\r\nimport java.nio.channels.ClosedByInterruptException;\r\nimport java.security.acl.Group;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\nimport java.util.stream.Stream;\r\n\r\n@SuppressWarnings(\"unchecked\")\r\npublic class GroupActivity extends AppCompatActivity {\r\n\r\n    private RecyclerView recyclerView;\r\n    private ArrayList<Integer> GroupIdList = new ArrayList();\r\n\r\n    //TODO data van sql in datastructuur zetten\r\n    private String[] s1 = {\"test category\"};\r\n    private String[] s2 = {\"group name\"};\r\n    private int[] images = {R.drawable.testperson1};\r\n    private Map<Integer, ArrayList<User>> userMap = new HashMap<>();\r\n\r\n    private ImageView add_btn;\r\n    private ImageView settings;\r\n\r\n    @Override\r\n    protected void onCreate(@Nullable Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.group_view);\r\n\r\n        recyclerView = findViewById(R.id.recycler_view);\r\n        ImageView userPicture = findViewById(R.id.user_picture);\r\n        User user = getIntent().getExtras().getParcelable(\"user\");\r\n\r\n        try {\r\n            Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());\r\n            userPicture.setImageBitmap(mBitmap);\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        add_btn = findViewById(R.id.add_btn);\r\n        settings = findViewById(R.id.settings);\r\n\r\n        // dit kan mss makkelijker geschreven worden\r\n        ImageView add_btn_card = findViewById(R.id.addbtn_card);\r\n        ImageView cancel_button = findViewById(R.id.cancel_button);\r\n        ImageView qr_button = findViewById(R.id.qr_button);\r\n        ImageView single_button = findViewById(R.id.single_button);\r\n        ImageView group_button = findViewById(R.id.group_button);\r\n        ImageView plus1 = findViewById(R.id.plus1);\r\n        ImageView plus2 = findViewById(R.id.plus2);\r\n\r\n        ImageView[] addCard = {cancel_button, qr_button, single_button, group_button, plus1, plus2, add_btn_card};\r\n\r\n        Arrays.stream(addCard)\r\n                .forEach(e -> e.setVisibility(View.GONE));\r\n\r\n        Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);\r\n        Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);\r\n\r\n        add_btn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                    Log.d(\"demo \", \"add button pressed\");\r\n                    Arrays.stream(addCard)\r\n                            .forEach(e -> e.setVisibility(View.VISIBLE));\r\n                    animSlideUp.reset();\r\n                    Arrays.stream(addCard).forEach(e -> e.clearAnimation());\r\n                    Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideUp));\r\n                    add_btn.clearAnimation();\r\n                    add_btn.startAnimation(animSlideDown);\r\n                    add_btn.setVisibility(View.GONE);\r\n            }\r\n        });\r\n        settings.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(GroupActivity.this, SettingsActivity.class);\r\n                intent.putExtra(\"user\", user);\r\n                startActivity(intent);\r\n                overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);\r\n            }\r\n        });\r\n\r\n        cancel_button.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Arrays.stream(addCard)\r\n                        .forEach(e -> e.setVisibility(View.GONE));\r\n                add_btn.setVisibility(View.VISIBLE);\r\n                animSlideUp.reset();\r\n                Arrays.stream(addCard).forEach(e -> e.clearAnimation());\r\n                Arrays.stream(addCard).forEach(e -> e.startAnimation(animSlideDown));\r\n                add_btn.clearAnimation();\r\n                add_btn.startAnimation(animSlideUp);\r\n\r\n            }\r\n        });\r\n        qr_button.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(GroupActivity.this, QRactivity.class);\r\n                intent.putExtra(\"user\", user);\r\n                startActivity(intent);\r\n                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);\r\n            }\r\n        });\r\n        single_button.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //TODO intent naar temp event creation\r\n            }\r\n        });\r\n        group_button.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //TODO intent naar group creation view\r\n            }\r\n        });\r\n\r\n        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, s1, s2, images, user);\r\n        recyclerView.setAdapter(recyclerViewAdapter);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/fleet/GroupActivity.java	(revision 717fb1a99f9ca8ec4744f6b1ec8af67e3778e48d)
++++ app/src/main/java/com/example/fleet/GroupActivity.java	(date 1620381807700)
+@@ -50,6 +50,7 @@
+         recyclerView = findViewById(R.id.recycler_view);
+         ImageView userPicture = findViewById(R.id.user_picture);
+         User user = getIntent().getExtras().getParcelable("user");
++//        HttpHandler databaseReq = new HttpHandler();
+ 
+         try {
+             Bitmap mBitmap = user.getFacebookProfilePicture(user.getId());
+@@ -138,9 +139,11 @@
+             }
+         });
+ 
++//        databaseReq.httpRequest("https://studev.groept.be/api/a20sd108/get_all_groups_from_user/2510154809131270", getApplicationContext());
++//        databaseReq.getResponse();
++
+         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, s1, s2, images, user);
+         recyclerView.setAdapter(recyclerViewAdapter);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+     }
+-
+-}
++}
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Fri Mar 26 11:29:03 CET 2021\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.5-bin.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 717fb1a99f9ca8ec4744f6b1ec8af67e3778e48d)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1620051349155)
+@@ -1,6 +1,6 @@
+-#Fri Mar 26 11:29:03 CET 2021
++#Mon May 03 16:15:49 CEST 2021
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-all.zip
+Index: app/src/main/java/com/example/fleet/HttpHandler.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fleet;\r\n\r\nimport android.content.Context;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.android.volley.Request;\r\nimport com.android.volley.RequestQueue;\r\nimport com.android.volley.Response;\r\nimport com.android.volley.VolleyError;\r\nimport com.android.volley.toolbox.JsonArrayRequest;\r\nimport com.android.volley.toolbox.StringRequest;\r\nimport com.android.volley.toolbox.Volley;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\npublic class HttpHandler{\r\n    private JSONArray responseData;\r\n\r\n    public HttpHandler(){\r\n    }\r\n\r\n    public JSONArray getResponse(){\r\n        return responseData;\r\n    }\r\n\r\n    public void httpRequest(String url, Context context) {\r\n        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());\r\n        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {\r\n            @Override\r\n            public void onResponse(JSONArray response) {\r\n                responseData = response;\r\n            }\r\n        }, new Response.ErrorListener() {\r\n            @Override\r\n            public void onErrorResponse(VolleyError error) {\r\n            }\r\n        });\r\n        requestQueue.add(submitRequest);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/fleet/HttpHandler.java	(revision 717fb1a99f9ca8ec4744f6b1ec8af67e3778e48d)
++++ app/src/main/java/com/example/fleet/HttpHandler.java	(date 1620381612867)
+@@ -1,6 +1,7 @@
+ package com.example.fleet;
+ 
+ import android.content.Context;
++import android.util.Log;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+@@ -32,6 +33,8 @@
+             @Override
+             public void onResponse(JSONArray response) {
+                 responseData = response;
++                Log.d("demo","response");
++
+             }
+         }, new Response.ErrorListener() {
+             @Override

@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="demo" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cf461504-ba1b-4ab6-82fc-5c5535db5918" name="Default Changelist" comment="PeopleRecycler krijgt statuses van mensen">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/fleet/MapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/fleet/MapActivity.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@dc4be8bd]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="layoutResourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qR8BAdvT9pvob9A1NkLSttbdHz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="SerialNumber@dc4be8bd" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-05-25T11:26:35.785992700Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Fleet.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cf461504-ba1b-4ab6-82fc-5c5535db5918" name="Default Changelist" comment="" />
+      <created>1617030903102</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617030903102</updated>
+    </task>
+    <task id="LOCAL-00001" summary="http requests bijna werkend en id niet null, graphrequest gefixed">
+      <created>1619443997237</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619443997237</updated>
+    </task>
+    <task id="LOCAL-00002" summary="werkende databank communicatie">
+      <created>1619448427591</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619448427591</updated>
+    </task>
+    <task id="LOCAL-00003" summary="database communicatie versimpelt naar classe met 2 methodes">
+      <created>1619780250950</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1619780250950</updated>
+    </task>
+    <task id="LOCAL-00004" summary="begin aan group shit">
+      <created>1621439157678</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1621439157678</updated>
+    </task>
+    <task id="LOCAL-00005" summary="wtf werkende database request">
+      <created>1621587965860</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1621587965860</updated>
+    </task>
+    <task id="LOCAL-00006" summary="misschien werkende qr scanner, kan nog niet testen">
+      <created>1621602990772</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1621602990772</updated>
+    </task>
+    <task id="LOCAL-00007" summary="group create werkt maar crashed wel als ge geen naam of desc in geeft">
+      <created>1621675620780</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1621675620781</updated>
+    </task>
+    <task id="LOCAL-00008" summary="group create werkt maar crashed wel als ge geen naam of desc in geeft">
+      <created>1621675710962</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1621675710962</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update nu ook de groepen van de user na het maken van een groep">
+      <created>1621684576530</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1621684576530</updated>
+    </task>
+    <task id="LOCAL-00010" summary="groep toevoegen duidelijker gemaakt en nog iets maar weet niet meer wat exact">
+      <created>1621685281791</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1621685281791</updated>
+    </task>
+    <task id="LOCAL-00011" summary="auto refreshing grouplist en shiz">
+      <created>1621703507230</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1621703507230</updated>
+    </task>
+    <task id="LOCAL-00012" summary="de groep toevoegen aan user gebeurt in GroupActivity zelf ipv elke keer dat we naar GroupActivity gaan">
+      <created>1621704514958</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1621704514958</updated>
+    </task>
+    <task id="LOCAL-00013" summary="zotte groepen search werkt">
+      <created>1621861107283</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1621861107283</updated>
+    </task>
+    <task id="LOCAL-00014" summary="groepen hebben een status">
+      <created>1621881162023</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1621881162023</updated>
+    </task>
+    <task id="LOCAL-00015" summary="cleanup van recyclerview">
+      <created>1621882715276</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1621882715276</updated>
+    </task>
+    <task id="LOCAL-00016" summary="leave group mogelijk">
+      <created>1621888072682</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1621888072682</updated>
+    </task>
+    <task id="LOCAL-00017" summary="ez group join">
+      <created>1621891528305</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1621891528305</updated>
+    </task>
+    <task id="LOCAL-00018" summary="PeopleRecycler krijgt statuses van mensen">
+      <created>1621933613321</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1621933613321</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="http requests bijna werkend en id niet null, graphrequest gefixed" />
+    <MESSAGE value="werkende databank communicatie" />
+    <MESSAGE value="database communicatie versimpelt naar classe met 2 methodes" />
+    <MESSAGE value="begin aan group shit" />
+    <MESSAGE value="wtf werkende database request" />
+    <MESSAGE value="misschien werkende qr scanner, kan nog niet testen" />
+    <MESSAGE value="group create werkt maar crashed wel als ge geen naam of desc in geeft" />
+    <MESSAGE value="update nu ook de groepen van de user na het maken van een groep" />
+    <MESSAGE value="groep toevoegen duidelijker gemaakt en nog iets maar weet niet meer wat exact" />
+    <MESSAGE value="auto refreshing grouplist en shiz" />
+    <MESSAGE value="de groep toevoegen aan user gebeurt in GroupActivity zelf ipv elke keer dat we naar GroupActivity gaan" />
+    <MESSAGE value="zotte groepen search werkt" />
+    <MESSAGE value="groepen hebben een status" />
+    <MESSAGE value="cleanup van recyclerview" />
+    <MESSAGE value="leave group mogelijk" />
+    <MESSAGE value="ez group join" />
+    <MESSAGE value="PeopleRecycler krijgt statuses van mensen" />
+    <option name="LAST_COMMIT_MESSAGE" value="PeopleRecycler krijgt statuses van mensen" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="906" y="378" key="#Inspections" timestamp="1621882383967">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="906" y="378" key="#Inspections/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621882383967" />
+    <state x="797" y="446" key="#PSD" timestamp="1617032449482">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="797" y="446" key="#PSD/0.0.2560.1400@0.0.2560.1400" timestamp="1617032449482" />
+    <state x="872" y="341" key="#Plugins" timestamp="1621877017682">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="872" y="341" key="#Plugins/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621877017682" />
+    <state x="1085" y="406" key="#com.intellij.ide.util.MemberChooser" timestamp="1621863594233">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="868" y="322" key="#com.intellij.ide.util.MemberChooser/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621530698441" />
+    <state x="1085" y="406" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621863594233" />
+    <state x="960" y="436" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1620487976602">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="960" y="436" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1620487976602" />
+    <state x="681" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1621437413977">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="681" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621437413977" />
+    <state x="604" y="311" key="AndroidCreateResourceFileDialog" timestamp="1621888924789">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="604" y="311" key="AndroidCreateResourceFileDialog/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621888924789" />
+    <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog" timestamp="1621941715160">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="74" y="73" width="1901" height="966" key="DiffContextDialog/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621603199187" />
+    <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621869659695" />
+    <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621941715160" />
+    <state x="342" y="361" key="FileChooserDialogImpl" timestamp="1621888320154">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="285" y="299" key="FileChooserDialogImpl/0.0.1707.920/-1920.349.1920.1040@0.0.1707.920" timestamp="1619174973798" />
+    <state x="342" y="361" key="FileChooserDialogImpl/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621888320154" />
+    <state x="427" y="455" key="FileChooserDialogImpl/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1619852385359" />
+    <state x="427" y="455" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1618319913032" />
+    <state width="2517" height="398" key="GridCell.Tab.0.bottom" timestamp="1621942123533">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="999" height="304" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621889705200" />
+    <state width="997" height="299" key="GridCell.Tab.0.bottom/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621602981324" />
+    <state width="1251" height="216" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881213932" />
+    <state width="2517" height="398" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621942123533" />
+    <state width="616" height="398" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1618320283509" />
+    <state width="2517" height="398" key="GridCell.Tab.0.center" timestamp="1621942123533">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="999" height="304" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621889705200" />
+    <state width="997" height="299" key="GridCell.Tab.0.center/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621602981324" />
+    <state width="1251" height="216" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881213932" />
+    <state width="2517" height="398" key="GridCell.Tab.0.center/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621942123533" />
+    <state width="616" height="398" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1618320283509" />
+    <state width="2517" height="398" key="GridCell.Tab.0.left" timestamp="1621942123533">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="999" height="304" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621889705200" />
+    <state width="997" height="299" key="GridCell.Tab.0.left/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621602981323" />
+    <state width="1251" height="216" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881213932" />
+    <state width="2517" height="398" key="GridCell.Tab.0.left/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621942123533" />
+    <state width="616" height="398" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1618320283509" />
+    <state width="2517" height="398" key="GridCell.Tab.0.right" timestamp="1621942123533">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="999" height="304" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621889705200" />
+    <state width="997" height="299" key="GridCell.Tab.0.right/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621602981324" />
+    <state width="1251" height="216" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881213932" />
+    <state width="2517" height="398" key="GridCell.Tab.0.right/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621942123533" />
+    <state width="616" height="398" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1618320283509" />
+    <state x="248" y="118" key="MergeDialog" timestamp="1621435032456">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="198" y="94" key="MergeDialog/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1619780407276" />
+    <state x="248" y="118" key="MergeDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621435032456" />
+    <state x="663" y="318" key="MultipleFileMergeDialog" timestamp="1619780407286">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="663" y="318" key="MultipleFileMergeDialog/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1619780407286" />
+    <state x="1039" y="402" key="RollbackChangesDialog" timestamp="1621699682044">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="831" y="319" key="RollbackChangesDialog/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1620381091649" />
+    <state x="1039" y="402" key="RollbackChangesDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621699682044" />
+    <state x="141" y="348" key="SettingsEditor" timestamp="1617032241764">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="141" y="348" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1617032241764" />
+    <state x="771" y="364" key="Vcs.Push.Dialog.v2" timestamp="1621933617189">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="617" y="289" key="Vcs.Push.Dialog.v2/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621891534252" />
+    <state x="617" y="289" key="Vcs.Push.Dialog.v2/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621603004765" />
+    <state x="771" y="364" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881167650" />
+    <state x="771" y="364" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621933617189" />
+    <state x="1089" y="614" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621937147752">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="726" y="403" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1707.920/-1920.349.1920.1040@0.0.1707.920" timestamp="1619175916516" />
+    <state x="871" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621891880039" />
+    <state x="871" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2048.1112/-2400.436.1920.1040@0.0.2048.1112" timestamp="1621899643832" />
+    <state x="1089" y="614" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621881207058" />
+    <state x="1089" y="614" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621937147752" />
+    <state x="1089" y="614" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1618319798614" />
+    <state x="988" y="544" key="edit.logcat.filter.dialog.dimensions" timestamp="1621684664673">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="988" y="544" key="edit.logcat.filter.dialog.dimensions/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621684664673" />
+    <state x="1010" y="461" key="extract.method.dialog" timestamp="1621933330472">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="808" y="366" key="extract.method.dialog/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621884009668" />
+    <state x="1010" y="461" key="extract.method.dialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621704963428" />
+    <state x="1010" y="461" key="extract.method.dialog/0.0.2560.1400/-2400.436.1920.1040@0.0.2560.1400" timestamp="1621933330472" />
+    <state x="1085" y="555" key="psd.choose.module.panel.dimension" timestamp="1617031586179">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1085" y="555" key="psd.choose.module.panel.dimension/0.0.2560.1400@0.0.2560.1400" timestamp="1617031586179" />
+    <state x="1075" y="447" key="refactoring.ChangeSignatureDialog" timestamp="1621863595950">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1075" y="447" key="refactoring.ChangeSignatureDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621863595950" />
+    <state x="749" y="262" key="run.anything.popup" timestamp="1621883220909">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="749" y="262" key="run.anything.popup/0.0.2048.1112/-1920.349.1920.1040@0.0.2048.1112" timestamp="1621883220909" />
+    <state x="936" y="330" key="run.anything.popup/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621700488006" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1621878201033">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1621878201033" />
+  </component>
+</project>

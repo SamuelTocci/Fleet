@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -252,11 +253,23 @@ public class MapActivity extends AppCompatActivity{
         exit_group_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId(), null, response -> {
-                }, error -> {
-                });
-                requestQueue.add(leaveGroupRequest);
+//
+//                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId(), null, response -> {
+//                        JSONObject usercount;
+//                        try {
+//                            usercount = response.getJSONObject(1);
+//                            if(usercount.getInt("userCount") == 0){
+//                                destroyGroup();
+//                            }
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                }, error -> {
+//                });
+//                requestQueue.add(leaveGroupRequest);
 
                 card.setVisibility(View.GONE);
                 cancel_group_btn.setVisibility(View.GONE);
@@ -317,6 +330,13 @@ public class MapActivity extends AppCompatActivity{
         });
     }
 
+//    public void destroyGroup(){
+//        JsonArrayRequest destroyGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/destroy_group/" + groupId, null, response -> {
+//        }, error -> {
+//        });
+//        requestQueue.add(destroyGroupRequest);;
+//    }
+
     private void goToGroupActivity(User user) {
         Intent intent = new Intent(MapActivity.this, GroupActivity.class);
         intent.putExtra("user", user);
@@ -356,13 +376,15 @@ public class MapActivity extends AppCompatActivity{
     }
 
     public void fillUserStatuses() {
+        userIds = new ArrayList<>();
+        userStatuses = new ArrayList<>();
         JsonArrayRequest userStatusInfoRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_all_users_from_group/" + groupId, null, response -> {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject userInfo;
                 try {
                     userInfo = response.getJSONObject(i);
                     userIds.add(userInfo.getString("userID"));
-                    userStatuses.add(userInfo.getString("status"));
+                    userStatuses.add(userInfo.get("status").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

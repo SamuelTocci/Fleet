@@ -74,7 +74,7 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
                 intent.putExtra("ShowStatusSwitch",true);
                 intent.putExtra("switchStatusForThisId", userIds.get(position));
                 context.startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
+                activity.overridePendingTransition(0, 0);
             }
         });
     }

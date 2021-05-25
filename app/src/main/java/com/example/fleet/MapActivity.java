@@ -167,36 +167,32 @@ public class MapActivity extends AppCompatActivity{
         present_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeStatus("present");
                 hideStatusSwitchPrompt();
-
-                //TODO db
             }
         });
 
         otw_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeStatus("omw");
                 hideStatusSwitchPrompt();
-
-                //TODO db
             }
         });
 
         coming_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeStatus("coming");
                 hideStatusSwitchPrompt();
-
-                //TODO db
             }
         });
 
         not_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeStatus("not coming");
                 hideStatusSwitchPrompt();
-
-                //TODO db
             }
         });
 
@@ -274,16 +270,17 @@ public class MapActivity extends AppCompatActivity{
 //
                 JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId() + "/" + groupId, null, response -> {
                         JSONObject usercount;
+                    for (int i = 0; i < response.length(); i++) {
                         try {
-                            usercount = response.getJSONObject(1);
-                            if(usercount.getInt("userCount") == 0){
+                            usercount = response.getJSONObject(i);
+                            Log.d("demo", usercount.get("userCount").toString());
+                            if (true) {
                                 destroyGroup();
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
 
                 }, error -> {
                 });
@@ -356,8 +353,16 @@ public class MapActivity extends AppCompatActivity{
         cancel_status_btn.setVisibility(View.GONE);
     }
 
+    private void changeStatus(String status){
+        JsonArrayRequest changeStatusRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/change_status_in_group/" + status+ "/" + groupId + "/" + user.getId() , null, response -> {
+        }, error -> {
+        });
+        requestQueue.add(changeStatusRequest);
+    }
+
     public void destroyGroup(){
         JsonArrayRequest destroyGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/destroy_group/" + groupId, null, response -> {
+            Log.d("demo", "destroyed" + groupId);
         }, error -> {
         });
         requestQueue.add(destroyGroupRequest);;
@@ -415,7 +420,6 @@ public class MapActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
             }
-            Log.d("demo","oproepen in fill users");
             peopleRecycler();
         }, error -> {
         });
@@ -423,7 +427,6 @@ public class MapActivity extends AppCompatActivity{
     }
 
     private void peopleRecycler() {
-        Log.d("demo","people recyceler functie");
         PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images, userIds, userStatuses,user,groupId,groupStatus);
         rv_small.setAdapter(rva_small);
         rv_small.setLayoutManager(new GridLayoutManager(this,6));

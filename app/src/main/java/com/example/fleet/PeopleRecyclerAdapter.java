@@ -82,7 +82,7 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
     // total number of cells
     @Override
     public int getItemCount() {
-        return images.length;
+        return userIds.size();
     }
 
 

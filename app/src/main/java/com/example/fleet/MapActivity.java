@@ -134,13 +134,7 @@ public class MapActivity extends AppCompatActivity{
         reset_status_btn = findViewById(R.id.reset_status_btn);
         cancel_status_btn = findViewById(R.id.cancel_status_btn);
 
-        status_switch_prompt.setVisibility(View.GONE);
-        present_btn.setVisibility(View.GONE);
-        otw_btn.setVisibility(View.GONE);
-        coming_btn.setVisibility(View.GONE);
-        not_btn.setVisibility(View.GONE);
-        reset_status_btn.setVisibility(View.GONE);
-        cancel_status_btn.setVisibility(View.GONE);
+        hideStatusSwitchPrompt();
 
         if(promptStatusSwitch){
             status_switch_prompt.setVisibility(View.VISIBLE);
@@ -156,29 +150,53 @@ public class MapActivity extends AppCompatActivity{
         cancel_status_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status_switch_prompt.setVisibility(View.GONE);
-                present_btn.setVisibility(View.GONE);
-                otw_btn.setVisibility(View.GONE);
-                coming_btn.setVisibility(View.GONE);
-                not_btn.setVisibility(View.GONE);
-                reset_status_btn.setVisibility(View.GONE);
-                cancel_status_btn.setVisibility(View.GONE);
+                hideStatusSwitchPrompt();
             }
         });
 
         reset_status_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status_switch_prompt.setVisibility(View.GONE);
-                present_btn.setVisibility(View.GONE);
-                otw_btn.setVisibility(View.GONE);
-                coming_btn.setVisibility(View.GONE);
-                not_btn.setVisibility(View.GONE);
-                reset_status_btn.setVisibility(View.GONE);
-                cancel_status_btn.setVisibility(View.GONE);
+                hideStatusSwitchPrompt();
 
                 //userToSwitch krijgt ge mee in de intent
                 //TODO status terug op NA zetten van de user id meegegeven in de intent
+            }
+        });
+
+        present_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideStatusSwitchPrompt();
+
+                //TODO db
+            }
+        });
+
+        otw_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideStatusSwitchPrompt();
+
+                //TODO db
+            }
+        });
+
+        coming_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideStatusSwitchPrompt();
+
+                //TODO db
+            }
+        });
+
+        not_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideStatusSwitchPrompt();
+
+                //TODO db
             }
         });
 
@@ -279,8 +297,6 @@ public class MapActivity extends AppCompatActivity{
             }
         });
 
-        fillUserStatuses();
-
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,6 +344,16 @@ public class MapActivity extends AppCompatActivity{
                     requestQueue.add(statusChangeRequest);
                 }
         });
+    }
+
+    private void hideStatusSwitchPrompt() {
+        status_switch_prompt.setVisibility(View.GONE);
+        present_btn.setVisibility(View.GONE);
+        otw_btn.setVisibility(View.GONE);
+        coming_btn.setVisibility(View.GONE);
+        not_btn.setVisibility(View.GONE);
+        reset_status_btn.setVisibility(View.GONE);
+        cancel_status_btn.setVisibility(View.GONE);
     }
 
 //    public void destroyGroup(){
@@ -389,6 +415,7 @@ public class MapActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
             }
+            Log.d("demo","oproepen in fill users");
             peopleRecycler();
         }, error -> {
         });
@@ -396,6 +423,7 @@ public class MapActivity extends AppCompatActivity{
     }
 
     private void peopleRecycler() {
+        Log.d("demo","people recyceler functie");
         PeopleRecyclerAdapter rva_small = new PeopleRecyclerAdapter(this, images, userIds, userStatuses,user,groupId,groupStatus);
         rv_small.setAdapter(rva_small);
         rv_small.setLayoutManager(new GridLayoutManager(this,6));

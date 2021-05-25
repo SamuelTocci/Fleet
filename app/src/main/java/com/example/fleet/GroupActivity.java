@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -186,6 +187,7 @@ public class GroupActivity extends AppCompatActivity {
             groupBundle = user.getGroupsBundle();
             recycler("");
         }, error -> {
+            Toast.makeText(GroupActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show();
         });
         requestQueue.add(groupInfoRequest);
     }

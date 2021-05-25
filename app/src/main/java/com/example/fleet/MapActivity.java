@@ -272,22 +272,22 @@ public class MapActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 //
-//                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId(), null, response -> {
-//                        JSONObject usercount;
-//                        try {
-//                            usercount = response.getJSONObject(1);
-//                            if(usercount.getInt("userCount") == 0){
-//                                destroyGroup();
-//                            }
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                }, error -> {
-//                });
-//                requestQueue.add(leaveGroupRequest);
+                JsonArrayRequest leaveGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/leave_group/" + groupId + "/" + user.getId() + "/" + groupId, null, response -> {
+                        JSONObject usercount;
+                        try {
+                            usercount = response.getJSONObject(1);
+                            if(usercount.getInt("userCount") == 0){
+                                destroyGroup();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                }, error -> {
+                });
+                requestQueue.add(leaveGroupRequest);
 
                 card.setVisibility(View.GONE);
                 cancel_group_btn.setVisibility(View.GONE);
@@ -356,12 +356,12 @@ public class MapActivity extends AppCompatActivity{
         cancel_status_btn.setVisibility(View.GONE);
     }
 
-//    public void destroyGroup(){
-//        JsonArrayRequest destroyGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/destroy_group/" + groupId, null, response -> {
-//        }, error -> {
-//        });
-//        requestQueue.add(destroyGroupRequest);;
-//    }
+    public void destroyGroup(){
+        JsonArrayRequest destroyGroupRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/destroy_group/" + groupId, null, response -> {
+        }, error -> {
+        });
+        requestQueue.add(destroyGroupRequest);;
+    }
 
     private void goToGroupActivity(User user) {
         Intent intent = new Intent(MapActivity.this, GroupActivity.class);

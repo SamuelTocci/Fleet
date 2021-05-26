@@ -34,7 +34,7 @@ public class QRgeneratorActivity extends AppCompatActivity {
         cancel_activity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QRgeneratorActivity.this, GroupActivity.class);
+                Intent intent = new Intent(QRgeneratorActivity.this, MapActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("groupStatus",groupStatus);

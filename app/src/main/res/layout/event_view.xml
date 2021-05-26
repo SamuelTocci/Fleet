@@ -125,13 +125,13 @@
         app:srcCompat="@drawable/ic_exitgroupbutton" />
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_people_card"
-            android:id="@+id/people_card"
-            app:layout_constraintBottom_toBottomOf="@+id/openmapview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/people_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/openmapview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_people_card" />
 
     <ImageView
         android:id="@+id/groupleavecard"

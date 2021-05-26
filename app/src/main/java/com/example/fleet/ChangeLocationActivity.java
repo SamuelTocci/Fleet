@@ -44,8 +44,7 @@ public class ChangeLocationActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         cancel.setOnClickListener(v -> {
-            Intent intent = new Intent(ChangeLocationActivity.this, MapActivity.class);
-            startActivity(intent);
+            goToMapActivity();
         });
 
         confirm.setOnClickListener(v -> {
@@ -57,6 +56,10 @@ public class ChangeLocationActivity extends AppCompatActivity {
     }
 
     private void goToMapActivity(){
+        Log.d("demo", String.valueOf(user));
+        Log.d("demo", String.valueOf(groupId));
+        Log.d("demo", String.valueOf(groupStatus));
+
         Intent intent = new Intent(ChangeLocationActivity.this, MapActivity.class);
         intent.putExtra("user", user);
         intent.putExtra("groupId", groupId);

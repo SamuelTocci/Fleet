@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <ImageView
+        android:id="@+id/cancel_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_cancel" />
+
+    <ImageView
+        android:id="@+id/coords_hint_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_rounded_box" />
+
+    <TextView
+        android:id="@+id/coords_hint"
+        android:layout_width="283dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="Use google maps to get coordinates"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/coords_hint_box"
+        app:layout_constraintEnd_toEndOf="@+id/coords_hint_box"
+        app:layout_constraintStart_toStartOf="@+id/coords_hint_box"
+        app:layout_constraintTop_toTopOf="@+id/coords_hint_box" />
+
+    <ImageView
+        android:id="@+id/x_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/coords_hint_box"
+        app:layout_constraintStart_toStartOf="@+id/coords_hint_box"
+        app:layout_constraintTop_toBottomOf="@+id/coords_hint_box"
+        app:srcCompat="@drawable/ic_rounded_box" />
+
+    <ImageView
+        android:id="@+id/y_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/x_box"
+        app:layout_constraintStart_toStartOf="@+id/x_box"
+        app:layout_constraintTop_toBottomOf="@+id/x_box"
+        app:srcCompat="@drawable/ic_rounded_box" />
+
+    <EditText
+        android:id="@+id/x_coordinates"
+        android:layout_width="257dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="X coordinate"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#E0E0E0"
+        app:layout_constraintBottom_toBottomOf="@+id/x_box"
+        app:layout_constraintEnd_toEndOf="@+id/x_box"
+        app:layout_constraintStart_toStartOf="@+id/x_box"
+        app:layout_constraintTop_toTopOf="@+id/x_box" />
+
+    <EditText
+        android:id="@+id/y_coordinates"
+        android:layout_width="257dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Y coordinate"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#E0E0E0"
+        app:layout_constraintBottom_toBottomOf="@+id/y_box"
+        app:layout_constraintEnd_toEndOf="@+id/y_box"
+        app:layout_constraintStart_toStartOf="@+id/y_box"
+        app:layout_constraintTop_toTopOf="@+id/y_box" />
+
+    <ImageView
+        android:id="@+id/add_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/y_box"
+        app:layout_constraintStart_toStartOf="@+id/y_box"
+        app:layout_constraintTop_toBottomOf="@+id/y_box"
+        app:srcCompat="@drawable/ic_add_button_light" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

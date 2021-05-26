@@ -3,6 +3,7 @@ package com.example.fleet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class PeopleRecyclerAdapter extends RecyclerView.Adapter<PeopleRecyclerAd
 
     // data is passed into the constructor
     PeopleRecyclerAdapter(Context context, int[] images, ArrayList<String> userIds, ArrayList<String> userStatuses, User user, String groupId, int groupStatus) {
+
         this.images = images;
         this.context = context;
         this.userIds = userIds;

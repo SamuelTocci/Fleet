@@ -100,7 +100,7 @@ public class MapActivity extends AppCompatActivity{
         map = findViewById(R.id.openmapview);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
-        mapStuff();
+        mapRequest();
 
         Animation animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
@@ -118,6 +118,7 @@ public class MapActivity extends AppCompatActivity{
         cancel_group_btn = findViewById(R.id.cancel_leave);
         exit_group_btn = findViewById(R.id.confirm_leave);
         qr_btn = findViewById(R.id.qr_gen);
+        changeStatus = findViewById(R.id.status_switch);
         rv_extended.setVisibility(View.GONE);
         rv_card_extended.setVisibility(View.GONE);
         cancel_btn.setVisibility(View.GONE);
@@ -194,7 +195,7 @@ public class MapActivity extends AppCompatActivity{
 
             changeLocation.setVisibility(View.VISIBLE);
             changeLocation_card.setVisibility(View.VISIBLE);
-
+            changeStatus.setVisibility(View.VISIBLE);
         });
 
 
@@ -216,6 +217,7 @@ public class MapActivity extends AppCompatActivity{
 
             changeLocation.setVisibility(View.GONE);
             changeLocation_card.setVisibility(View.GONE);
+            changeStatus.setVisibility(View.GONE);
         });
 
         leave_btn.setOnClickListener(v -> {
@@ -261,18 +263,24 @@ public class MapActivity extends AppCompatActivity{
         groups_button = findViewById(R.id.groups);
         groups_button.setOnClickListener(v -> goToGroupActivity(user));
 
-        changeLocation.setOnClickListener(v -> {
-            //TODO locaties fixen
-//                Intent intent = new Intent(MapActivity.this, LocationActivity.class);
-//                intent.putExtra("user", user);
-//                startActivity(intent);
+        changeLocation_card.setOnClickListener(v -> {
+                Intent intent = new Intent(MapActivity.this, ChangeLocationActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupStatus",groupStatus);
+                intent.putExtra("ShowStatusSwitch",false);
+                startActivity(intent);
         });
 
         qr_btn.setOnClickListener(v -> {
             Intent intent = new Intent(MapActivity.this, QRgeneratorActivity.class);
-            intent.putExtra("groupId", MapActivity.this.groupId);
+            intent.putExtra("user", user);
+            intent.putExtra("groupId", groupId);
+            intent.putExtra("groupStatus",groupStatus);
+            intent.putExtra("ShowStatusSwitch",false);
             startActivity(intent);
         });
+
 
         Switch onOffSwitch = findViewById(R.id.status_switch);
         boolean state;
@@ -322,17 +330,27 @@ public class MapActivity extends AppCompatActivity{
         overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
     }
 
-    private void mapStuff() {
-        IMapController mapController = map.getController();
-        mapController.setZoom(20.0);
-        GeoPoint startPoint = new GeoPoint(50.880192,4.699782);
-        mapController.setCenter(startPoint);
+    private void mapRequest() {
+        JsonArrayRequest meetingLocationRequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a20sd108/get_group_meeting/" + groupId, null, response -> {
+            JSONObject meetingInfo;
+            try {
+                meetingInfo = response.getJSONObject(0);
+                IMapController mapController = map.getController();
+                mapController.setZoom(18.0);
+                GeoPoint startPoint  = new GeoPoint(meetingInfo.getDouble("x_meeting"),meetingInfo.getDouble("y_meeting"));
+                mapController.setCenter(startPoint);
 
-        Marker startMarker = new Marker(map);
-        startMarker.setPosition(startPoint);
-        startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        map.getOverlays().add(startMarker);
+                Marker startMarker = new Marker(map);
+                startMarker.setPosition(startPoint);
+                startMarker.setIcon(getResources().getDrawable(R.drawable.ic_marker));
+                startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                map.getOverlays().add(startMarker);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> Toast.makeText(MapActivity.this, "Unable to communicate with the server", Toast.LENGTH_LONG).show());
+        requestQueue.add(meetingLocationRequest);
     }
 
     public void onResume(){
